@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Men's Fashion — StyleNest</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{--black:#0D0D0D;--white:#FAFAF8;--blush:#E8C5B0;--rose:#C0616A;--sage:#7D9B76;--warm:#F5EFE6;--mid:#8A8070;}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:'Jost',sans-serif;background:var(--white);color:var(--black);}
+  nav{display:flex;align-items:center;justify-content:space-between;padding:18px 64px;background:var(--black);position:sticky;top:0;z-index:200;}
+  .logo{font-family:'Cormorant Garamond',serif;font-size:26px;color:var(--white);letter-spacing:3px;font-weight:600;text-decoration:none;display:block;}
+  .logo span{color:var(--blush);}
+  nav ul{display:flex;gap:36px;list-style:none;}
+  nav ul a{color:#bbb;text-decoration:none;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;transition:color 0.2s;}
+  nav ul a:hover,nav ul a.active{color:var(--blush);}
+  .nav-actions{display:flex;gap:20px;}
+  .nav-actions a{color:#bbb;text-decoration:none;font-size:13px;letter-spacing:1px;text-transform:uppercase;}
+  .page-hero{padding:64px;min-height:280px;background-image:url('https://images.unsplash.com/photo-1617137968427-85924c800a22?w=1400');background-size:cover;background-position:center top;position:relative;display:flex;align-items:flex-end;}
+  .page-hero::after{content:'';position:absolute;inset:0;background:rgba(0,0,0,0.6);}
+  .page-hero-text{position:relative;z-index:1;}
+  .page-tag{color:var(--blush);font-size:11px;letter-spacing:4px;text-transform:uppercase;margin-bottom:12px;}
+  .page-hero h1{font-family:'Cormorant Garamond',serif;font-size:56px;color:white;font-weight:300;}
+  .breadcrumb{padding:16px 64px;background:var(--warm);font-size:13px;color:var(--mid);}
+  .breadcrumb a{color:var(--mid);text-decoration:none;}
+  .layout{display:grid;grid-template-columns:240px 1fr;gap:0;min-height:80vh;}
+  .filters{padding:40px 32px;background:white;border-right:1px solid #eee;position:sticky;top:70px;height:calc(100vh - 70px);overflow-y:auto;}
+  .filter-section{margin-bottom:36px;}
+  .filter-title{font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:600;margin-bottom:16px;}
+  .filter-option{display:flex;align-items:center;gap:10px;margin-bottom:10px;cursor:pointer;}
+  .filter-option input{accent-color:var(--rose);}
+  .filter-option label{font-size:14px;color:#555;cursor:pointer;}
+  .filter-option label span{color:var(--mid);font-size:12px;}
+  .products-area{padding:40px 48px;}
+  .products-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:36px;}
+  .products-count{font-size:14px;color:var(--mid);}
+  .sort-select{padding:8px 16px;border:1px solid #ddd;font-family:'Jost',sans-serif;font-size:13px;background:white;cursor:pointer;}
+  .products-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;}
+  .product-card{cursor:pointer;text-decoration:none;color:inherit;display:block;}
+  .product-img{position:relative;height:380px;overflow:hidden;background:#f0ebe4;}
+  .product-img img{width:100%;height:100%;object-fit:cover;transition:transform 0.4s;}
+  .product-card:hover .product-img img{transform:scale(1.04);}
+  .product-badge{position:absolute;top:14px;left:14px;padding:4px 10px;font-size:11px;letter-spacing:1px;text-transform:uppercase;}
+  .badge-sale{background:var(--rose);color:white;}
+  .badge-new{background:var(--sage);color:white;}
+  .badge-hot{background:#e8a020;color:white;}
+  .product-info{padding:18px 4px 0;}
+  .product-brand{font-size:11px;color:var(--mid);letter-spacing:2px;text-transform:uppercase;margin-bottom:4px;}
+  .product-name{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:400;margin-bottom:8px;}
+  .product-price{font-size:15px;font-weight:500;color:var(--rose);}
+  .product-price .old{text-decoration:line-through;color:#bbb;font-weight:300;margin-right:8px;font-size:13px;}
+  .product-sizes{font-size:12px;color:var(--mid);margin-top:6px;}
+  .product-rating{font-size:12px;color:#e8a020;margin-top:4px;}
+  .cat-section{margin-bottom:56px;}
+  .cat-section-title{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:400;margin-bottom:4px;padding-bottom:12px;border-bottom:1px solid #eee;}
+  .cat-section-sub{font-size:13px;color:var(--mid);margin-bottom:28px;margin-top:8px;}
+  footer{background:var(--black);padding:32px 64px;display:flex;justify-content:space-between;align-items:center;}
+  .footer-logo{font-family:'Cormorant Garamond',serif;font-size:20px;color:var(--white);}
+  .footer-logo span{color:var(--blush);}
+  footer p{color:#555;font-size:13px;}
+</style>
+</head>
+<body>
+<nav>
+  <a class="logo" href="index.html">Style<span>Nest</span></a>
+  <ul>
+    <li><a href="index.html">Home</a></li>
+    <li><a href="women.html">Women</a></li>
+    <li><a href="men.html" class="active">Men</a></li>
+    <li><a href="accessories.html">Accessories</a></li>
+    <li><a href="sale.html">Sale</a></li>
+    <li><a href="about.html">About</a></li>
+  </ul>
+  <div class="nav-actions"><a href="#">Wishlist</a><a href="#">Cart (0)</a></div>
+</nav>
+<div class="page-hero">
+  <div class="page-hero-text">
+    <div class="page-tag">Spring / Summer 2026</div>
+    <h1>Men's Collection</h1>
+  </div>
+</div>
+<div class="breadcrumb"><a href="index.html">Home</a> &nbsp;/&nbsp; Men's Fashion</div>
+<div class="layout">
+  <aside class="filters">
+    <div class="filter-section">
+      <div class="filter-title">Category</div>
+      <div class="filter-option"><input type="checkbox" id="c1" checked><label for="c1">All Men's</label></div>
+      <div class="filter-option"><input type="checkbox" id="c2"><label for="c2">Shirts <span>(86)</span></label></div>
+      <div class="filter-option"><input type="checkbox" id="c3"><label for="c3">T-Shirts <span>(124)</span></label></div>
+      <div class="filter-option"><input type="checkbox" id="c4"><label for="c4">Trousers <span>(58)</span></label></div>
+      <div class="filter-option"><input type="checkbox" id="c5"><label for="c5">Jeans <span>(72)</span></label></div>
+      <div class="filter-option"><input type="checkbox" id="c6"><label for="c6">Ethnic Wear <span>(64)</span></label></div>
+      <div class="filter-option"><input type="checkbox" id="c7"><label for="c7">Jackets <span>(38)</span></label></div>
+      <div class="filter-option"><input type="checkbox" id="c8"><label for="c8">Activewear <span>(44)</span></label></div>
+    </div>
+    <div class="filter-section">
+      <div class="filter-title">Price Range</div>
+      <div class="filter-option"><input type="checkbox" id="p1"><label for="p1">Under Rs. 500</label></div>
+      <div class="filter-option"><input type="checkbox" id="p2"><label for="p2">Rs. 500 to 1,500</label></div>
+      <div class="filter-option"><input type="checkbox" id="p3" checked><label for="p3">Rs. 1,500 to 3,000</label></div>
+      <div class="filter-option"><input type="checkbox" id="p4"><label for="p4">Rs. 3,000 to 6,000</label></div>
+      <div class="filter-option"><input type="checkbox" id="p5"><label for="p5">Above Rs. 6,000</label></div>
+    </div>
+    <div class="filter-section">
+      <div class="filter-title">Size</div>
+      <div class="filter-option"><input type="checkbox" id="s1"><label for="s1">S</label></div>
+      <div class="filter-option"><input type="checkbox" id="s2" checked><label for="s2">M</label></div>
+      <div class="filter-option"><input type="checkbox" id="s3" checked><label for="s3">L</label></div>
+      <div class="filter-option"><input type="checkbox" id="s4"><label for="s4">XL</label></div>
+      <div class="filter-option"><input type="checkbox" id="s5"><label for="s5">XXL</label></div>
+      <div class="filter-option"><input type="checkbox" id="s6"><label for="s6">3XL</label></div>
+    </div>
+    <div class="filter-section">
+      <div class="filter-title">Brand</div>
+      <div class="filter-option"><input type="checkbox" id="b1"><label for="b1">Urban Thread</label></div>
+      <div class="filter-option"><input type="checkbox" id="b2"><label for="b2">Arrow</label></div>
+      <div class="filter-option"><input type="checkbox" id="b3"><label for="b3">Roadster</label></div>
+      <div class="filter-option"><input type="checkbox" id="b4"><label for="b4">Manyavar</label></div>
+      <div class="filter-option"><input type="checkbox" id="b5"><label for="b5">StyleNest Men</label></div>
+    </div>
+  </aside>
+  <div class="products-area">
+    <div class="products-header">
+      <div class="products-count">Showing 486 products in Men's Fashion</div>
+      <select class="sort-select"><option>Sort: Best Sellers</option><option>Price: Low to High</option><option>Price: High to Low</option><option>Newest First</option></select>
+    </div>
+    <!-- SHIRTS -->
+    <div class="cat-section" id="shirts">
+      <div class="cat-section-title">Shirts</div>
+      <div class="cat-section-sub">Casual, formal, linen, and printed — shirts for every occasion</div>
+      <div class="products-grid">
+        <a class="product-card" href="#linen-shirt" id="linen-shirt">
+          <div class="product-img"><img src="https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=500" alt="Linen Shirt"><span class="product-badge badge-new">New Arrival</span></div>
+          <div class="product-info">
+            <div class="product-brand">Urban Thread</div>
+            <div class="product-name">Premium Linen Casual Shirt</div>
+            <div class="product-price">Rs. 1,799</div>
+            <div class="product-sizes">Sizes: S, M, L, XL, XXL | Colors: White, Sky Blue, Sage, Beige</div>
+            <div class="product-rating">5 stars (523 reviews)</div>
+          </div>
+        </a>
+        <a class="product-card" href="#formal-shirt">
+          <div class="product-img"><img src="https://images.unsplash.com/photo-1594938298603-c8148c4b4d47?w=500" alt="Formal Shirt"><span class="product-badge badge-hot">Best Seller</span></div>
+          <div class="product-info">
+            <div class="product-brand">Arrow</div>
+            <div class="product-name">Slim Fit Formal Dress Shirt</div>
+            <div class="product-price">Rs. 2,499</div>
+            <div class="product-sizes">Sizes: 38, 40, 42, 44 | Colors: White, Light Blue, Pink</div>
+            <div class="product-rating">5 stars (892 reviews)</div>
+          </div>
+        </a>
+        <a class="product-card" href="#printed-shirt">
+          <div class="product-img"><img src="https://images.unsplash.com/photo-1589902860314-e910697dea18?w=500" alt="Printed Shirt"><span class="product-badge badge-sale">30% Off</span></div>
+          <div class="product-info">
+            <div class="product-brand">Roadster</div>
+            <div class="product-name">Tropical Print Vacation Shirt</div>
+            <div class="product-price"><span class="old">Rs. 1,499</span>Rs. 1,049</div>
+            <div class="product-sizes">Sizes: S, M, L, XL, XXL | Colors: Navy Print, Green Print</div>
+            <div class="product-rating">4 stars (341 reviews)</div>
+          </div>
+        </a>
+      </div>
+    </div>
+    <!-- T-SHIRTS -->
+    <div class="cat-section" id="tshirts">
+      <div class="cat-section-title">T-Shirts and Polos</div>
+      <div class="cat-section-sub">Classic comfort meets modern style</div>
+      <div class="products-grid">
+        <a class="product-card" href="#round-neck-tshirt">
+          <div class="product-img"><img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=500" alt="Round Neck Tee"><span class="product-badge badge-hot">Hot</span></div>
+          <div class="product-info">
+            <div class="product-brand">StyleNest Men</div>
+            <div class="product-name">Classic Cotton Round Neck Tee</div>
+            <div class="product-price">Rs. 499</div>
+            <div class="product-sizes">Sizes: S, M, L, XL, XXL, 3XL | 20 solid colors</div>
+            <div class="product-rating">5 stars (2,134 reviews)</div>
+          </div>
+        </a>
+        <a class="product-card" href="#polo-tshirt">
+          <div class="product-img"><img src="https://images.unsplash.com/photo-1586363104862-3a5e2ab60d99?w=500" alt="Polo Tshirt"></div>
+          <div class="product-info">
+            <div class="product-brand">Urban Thread</div>
+            <div class="product-name">Premium Pique Polo T-Shirt</div>
+            <div class="product-price">Rs. 1,299</div>
+            <div class="product-sizes">Sizes: S, M, L, XL, XXL | Colors: Navy, Black, White, Red</div>
+            <div class="product-rating">4 stars (678 reviews)</div>
+          </div>
+        </a>
+        <a class="product-card" href="#graphic-tshirt">
+          <div class="product-img"><img src="https://images.unsplash.com/photo-1503341504253-dff4815485f1?w=500" alt="Graphic Tee"><span class="product-badge badge-new">New</span></div>
+          <div class="product-info">
+            <div class="product-brand">Roadster</div>
+            <div class="product-name">Oversized Graphic Print Tee</div>
+            <div class="product-price">Rs. 799</div>
+            <div class="product-sizes">Sizes: S, M, L, XL, XXL | Colors: Black, White, Washed Grey</div>
+            <div class="product-rating">4 stars (412 reviews)</div>
+          </div>
+        </a>
+      </div>
+    </div>
+    <!-- ETHNIC WEAR -->
+    <div class="cat-section" id="ethnic">
+      <div class="cat-section-title">Ethnic and Festive Wear</div>
+      <div class="cat-section-sub">From Diwali to weddings — look your best for every celebration</div>
+      <div class="products-grid">
+        <a class="product-card" href="#kurta-set">
+          <div class="product-img"><img src="https://images.unsplash.com/photo-1612731831684-8c3b6e5ed52d?w=500" alt="Kurta Set"><span class="product-badge badge-sale">25% Off</span></div>
+          <div class="product-info">
+            <div class="product-brand">Manyavar</div>
+            <div class="product-name">Embroidered Silk Kurta Set</div>
+            <div class="product-price"><span class="old">Rs. 5,999</span>Rs. 4,499</div>
+            <div class="product-sizes">Sizes: S, M, L, XL, XXL | Colors: Ivory, Navy, Maroon</div>
+            <div class="product-rating">5 stars (387 reviews)</div>
+          </div>
+        </a>
+        <a class="product-card" href="#nehru-jacket">
+          <div class="product-img"><img src="https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=500" alt="Nehru Jacket"><span class="product-badge badge-new">New Arrival</span></div>
+          <div class="product-info">
+            <div class="product-brand">Manyavar</div>
+            <div class="product-name">Brocade Nehru Jacket</div>
+            <div class="product-price">Rs. 3,299</div>
+            <div class="product-sizes">Sizes: S, M, L, XL, XXL | Colors: Gold, Blue, Maroon</div>
+            <div class="product-rating">5 stars (214 reviews)</div>
+          </div>
+        </a>
+        <a class="product-card" href="#dhoti-kurta">
+          <div class="product-img"><img src="https://images.unsplash.com/photo-1622495966027-e0173192c728?w=500" alt="Dhoti Kurta"></div>
+          <div class="product-info">
+            <div class="product-brand">Rang Manch</div>
+            <div class="product-name">Cotton Dhoti Kurta Set</div>
+            <div class="product-price">Rs. 2,199</div>
+            <div class="product-sizes">Sizes: S, M, L, XL, XXL | Colors: White, Cream, Light Blue</div>
+            <div class="product-rating">4 stars (167 reviews)</div>
+          </div>
+        </a>
+      </div>
+    </div>
+    <!-- JACKETS -->
+    <div class="cat-section" id="jackets">
+      <div class="cat-section-title">Jackets and Outerwear</div>
+      <div class="cat-section-sub">Stay warm in style — from lightweight bombers to heavy winter jackets</div>
+      <div class="products-grid">
+        <a class="product-card" href="#bomber-jacket">
+          <div class="product-img"><img src="https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=500" alt="Bomber Jacket"><span class="product-badge badge-sale">35% Off</span></div>
+          <div class="product-info">
+            <div class="product-brand">StyleNest Men</div>
+            <div class="product-name">Classic Bomber Jacket</div>
+            <div class="product-price"><span class="old">Rs. 3,999</span>Rs. 2,599</div>
+            <div class="product-sizes">Sizes: S, M, L, XL, XXL | Colors: Black, Olive, Navy</div>
+            <div class="product-rating">5 stars (521 reviews)</div>
+          </div>
+        </a>
+        <a class="product-card" href="#denim-jacket">
+          <div class="product-img"><img src="https://images.unsplash.com/photo-1578932750294-f5075e85f44a?w=500" alt="Denim Jacket"></div>
+          <div class="product-info">
+            <div class="product-brand">Roadster</div>
+            <div class="product-name">Washed Denim Trucker Jacket</div>
+            <div class="product-price">Rs. 2,299</div>
+            <div class="product-sizes">Sizes: S, M, L, XL, XXL | Colors: Light Wash, Dark Wash</div>
+            <div class="product-rating">4 stars (298 reviews)</div>
+          </div>
+        </a>
+        <a class="product-card" href="#puffer-jacket">
+          <div class="product-img"><img src="https://images.unsplash.com/photo-1539533018257-a4a48b1a10b7?w=500" alt="Puffer Jacket"><span class="product-badge badge-new">New</span></div>
+          <div class="product-info">
+            <div class="product-brand">Urban Thread</div>
+            <div class="product-name">Lightweight Puffer Jacket</div>
+            <div class="product-price">Rs. 3,999</div>
+            <div class="product-sizes">Sizes: S, M, L, XL, XXL, 3XL | Colors: Black, Grey, Red</div>
+            <div class="product-rating">5 stars (187 reviews)</div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+<footer>
+  <div class="footer-logo">Style<span>Nest</span></div>
+  <p>Phone: 1800-103-7799 | Email: hello@stylenest.in</p>
+</footer>
+<script src="http://localhost:8000/widget/chatbot.js" data-client-id="9893a465-1be3-4685-9482-d9b995ce9ce0" data-api-key="aa34d49f-5353-42ad-9f9a-73b7b7a8e98b" defer></script>
+</body>
+</html>

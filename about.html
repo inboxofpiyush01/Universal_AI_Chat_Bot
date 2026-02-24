@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About Us — StyleNest</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{--black:#0D0D0D;--white:#FAFAF8;--blush:#E8C5B0;--rose:#C0616A;--sage:#7D9B76;--warm:#F5EFE6;--mid:#8A8070;}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:'Jost',sans-serif;background:var(--white);color:var(--black);}
+  nav{display:flex;align-items:center;justify-content:space-between;padding:18px 64px;background:var(--black);position:sticky;top:0;z-index:200;}
+  .logo{font-family:'Cormorant Garamond',serif;font-size:26px;color:var(--white);letter-spacing:3px;font-weight:600;text-decoration:none;}
+  .logo span{color:var(--blush);}
+  nav ul{display:flex;gap:36px;list-style:none;}
+  nav ul a{color:#bbb;text-decoration:none;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;transition:color 0.2s;}
+  nav ul a:hover,nav ul a.active{color:var(--blush);}
+  .nav-actions{display:flex;gap:20px;}
+  .nav-actions a{color:#bbb;text-decoration:none;font-size:13px;text-transform:uppercase;}
+
+  .page-hero{background:var(--black);padding:100px 64px;text-align:center;}
+  .page-tag{color:var(--blush);font-size:11px;letter-spacing:4px;text-transform:uppercase;margin-bottom:16px;}
+  .page-hero h1{font-family:'Cormorant Garamond',serif;font-size:64px;color:white;font-weight:300;}
+  .page-hero p{color:#777;font-size:16px;margin-top:20px;max-width:560px;margin-left:auto;margin-right:auto;line-height:1.7;}
+
+  .section{padding:80px 64px;}
+  .section.warm{background:var(--warm);}
+  .section.dark{background:var(--black);}
+  .section-tag{color:var(--rose);font-size:11px;letter-spacing:4px;text-transform:uppercase;margin-bottom:12px;}
+  .section-title{font-family:'Cormorant Garamond',serif;font-size:44px;margin-bottom:16px;font-weight:400;}
+  .section.dark .section-title{color:var(--white);}
+  .section-body{font-size:15px;line-height:1.9;color:#555;max-width:680px;}
+
+  .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;}
+  .grid-img{height:480px;object-fit:cover;width:100%;}
+
+  .values{display:grid;grid-template-columns:repeat(3,1fr);gap:40px;margin-top:48px;}
+  .value-card{padding:40px 32px;background:white;border-top:3px solid var(--blush);}
+  .value-icon{font-size:36px;margin-bottom:16px;}
+  .value-card h3{font-family:'Cormorant Garamond',serif;font-size:24px;margin-bottom:12px;font-weight:400;}
+  .value-card p{font-size:14px;line-height:1.7;color:#666;}
+
+  /* POLICIES */
+  .policies{display:grid;grid-template-columns:1fr 1fr;gap:64px;}
+  .policy-section h3{font-family:'Cormorant Garamond',serif;font-size:28px;margin-bottom:20px;font-weight:400;padding-bottom:12px;border-bottom:1px solid #eee;}
+  .policy-section p,.policy-section li{font-size:14px;line-height:1.9;color:#555;margin-bottom:8px;}
+  .policy-section ul{padding-left:20px;}
+  .policy-section li{margin-bottom:6px;}
+  .policy-highlight{background:var(--warm);padding:16px 20px;margin:16px 0;font-size:14px;border-left:3px solid var(--rose);}
+
+  /* FAQ */
+  .faq{max-width:760px;}
+  .faq-item{border-bottom:1px solid #eee;padding:24px 0;cursor:pointer;}
+  .faq-q{font-size:16px;font-weight:500;display:flex;justify-content:space-between;align-items:center;}
+  .faq-q:after{content:'+';font-size:20px;color:var(--rose);font-weight:300;}
+  .faq-a{font-size:14px;color:#666;line-height:1.8;margin-top:16px;display:none;}
+  .faq-item.open .faq-q:after{content:'−';}
+  .faq-item.open .faq-a{display:block;}
+
+  /* CONTACT */
+  .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;}
+  .contact-info h3{font-family:'Cormorant Garamond',serif;font-size:32px;margin-bottom:24px;color:var(--white);font-weight:400;}
+  .contact-item{display:flex;gap:16px;align-items:flex-start;margin-bottom:28px;}
+  .contact-icon{font-size:24px;margin-top:2px;}
+  .contact-item h4{color:var(--blush);font-size:12px;letter-spacing:2px;text-transform:uppercase;margin-bottom:6px;}
+  .contact-item p,.contact-item a{color:#888;font-size:14px;line-height:1.6;text-decoration:none;}
+  .contact-item a:hover{color:var(--blush);}
+  .contact-form input,.contact-form textarea,.contact-form select{
+    width:100%;padding:14px 16px;background:#1a1a1a;border:1px solid #2a2a2a;
+    color:white;font-family:'Jost',sans-serif;font-size:14px;margin-bottom:16px;
+    outline:none;transition:border-color 0.2s;
+  }
+  .contact-form input:focus,.contact-form textarea:focus{border-color:var(--blush);}
+  .contact-form textarea{height:120px;resize:vertical;}
+  .btn-primary{padding:14px 36px;background:var(--rose);color:white;border:none;font-family:'Jost',sans-serif;font-size:13px;cursor:pointer;letter-spacing:2px;text-transform:uppercase;font-weight:500;}
+  .btn-primary:hover{background:#a84e56;}
+
+  /* TEAM */
+  .team{display:grid;grid-template-columns:repeat(4,1fr);gap:32px;}
+  .team-card{text-align:center;}
+  .team-img{width:100%;height:280px;object-fit:cover;object-position:top;margin-bottom:20px;filter:grayscale(20%);}
+  .team-name{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:400;margin-bottom:4px;}
+  .team-role{font-size:12px;color:var(--mid);letter-spacing:2px;text-transform:uppercase;}
+
+  footer{background:var(--black);padding:32px 64px;display:flex;justify-content:space-between;align-items:center;}
+  .footer-logo{font-family:'Cormorant Garamond',serif;font-size:20px;color:var(--white);}
+  .footer-logo span{color:var(--blush);}
+  footer p{color:#555;font-size:13px;}
+</style>
+</head>
+<body>
+<nav>
+  <a class="logo" href="index.html">Style<span>Nest</span></a>
+  <ul>
+    <li><a href="index.html">Home</a></li>
+    <li><a href="women.html">Women</a></li>
+    <li><a href="men.html">Men</a></li>
+    <li><a href="accessories.html">Accessories</a></li>
+    <li><a href="sale.html">Sale</a></li>
+    <li><a href="about.html" class="active">About</a></li>
+  </ul>
+  <div class="nav-actions"><a href="#">Wishlist</a><a href="#">Cart (0)</a></div>
+</nav>
+
+<div class="page-hero">
+  <div class="page-tag">Est. 2015</div>
+  <h1>About StyleNest</h1>
+  <p>We believe fashion should be accessible, sustainable, and deeply personal. Since 2015, we've been dressing India's modern generation with curated style at honest prices.</p>
+</div>
+
+<!-- OUR STORY -->
+<section class="section">
+  <div class="grid-2">
+    <div>
+      <div class="section-tag">Our Story</div>
+      <div class="section-title">Born from a Passion for Style</div>
+      <div class="section-body">
+        <p>StyleNest was founded in 2015 by Rohan Kapoor and Meera Nair, two fashion enthusiasts who were frustrated by the gap between high-fashion aesthetics and affordable pricing in India.</p>
+        <br>
+        <p>Starting with just 200 SKUs in a small Mumbai office, we've grown to over 5,000 styles, 120+ partner brands, and deliveries across 28 states. Our mission remains the same: bring curated, quality fashion to every Indian home.</p>
+        <br>
+        <p>Today, StyleNest is trusted by over 8 lakh customers and processes 12,000+ orders every month. We work directly with weavers, manufacturers, and independent designers to ensure fair pricing and ethical sourcing.</p>
+      </div>
+    </div>
+    <img class="grid-img" src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=700" alt="StyleNest Story">
+  </div>
+</section>
+
+<!-- VALUES -->
+<section class="section warm">
+  <div class="section-tag">What We Stand For</div>
+  <div class="section-title">Our Values</div>
+  <div class="values">
+    <div class="value-card">
+      <div class="value-icon">🌱</div>
+      <h3>Sustainable Fashion</h3>
+      <p>We source from certified sustainable manufacturers. 40% of our collection uses organic or recycled fabrics. We're committed to reducing fashion's environmental impact.</p>
+    </div>
+    <div class="value-card">
+      <div class="value-icon">🤝</div>
+      <h3>Fair Trade Practices</h3>
+      <p>We work directly with artisans and weavers, ensuring fair wages and safe working conditions. Every Rang Manch product supports rural artisan communities across India.</p>
+    </div>
+    <div class="value-card">
+      <div class="value-icon">💯</div>
+      <h3>Quality Assurance</h3>
+      <p>Every product goes through a 12-point quality check before dispatch. If you're not 100% satisfied, we make it right with our no-questions-asked return policy.</p>
+    </div>
+  </div>
+</section>
+
+<!-- POLICIES -->
+<section class="section" id="shipping">
+  <div class="section-tag">Policies</div>
+  <div class="section-title" style="margin-bottom:48px;">Shipping & Returns</div>
+  <div class="policies">
+    <div class="policy-section" id="shipping-policy">
+      <h3>🚚 Shipping Policy</h3>
+      <div class="policy-highlight">Free delivery on all orders above ₹999. Express delivery available.</div>
+      <ul>
+        <li><strong>Standard Delivery:</strong> 4-7 business days — Free above ₹999, ₹99 below</li>
+        <li><strong>Express Delivery:</strong> 1-3 business days — ₹199 flat (₹99 for members)</li>
+        <li><strong>Same Day Delivery:</strong> Available in Mumbai, Delhi, Bangalore, Hyderabad — ₹299</li>
+        <li><strong>COD:</strong> Available across India, ₹50 handling charge applies</li>
+        <li>Orders placed before 2 PM are dispatched the same day</li>
+        <li>Tracking link sent via SMS and email after dispatch</li>
+        <li>We deliver to 28,000+ pincodes across India</li>
+      </ul>
+    </div>
+    <div class="policy-section" id="returns">
+      <h3>🔄 Return & Exchange Policy</h3>
+      <div class="policy-highlight">30-day hassle-free returns — no questions asked on most products.</div>
+      <ul>
+        <li><strong>Return Window:</strong> 30 days from delivery date</li>
+        <li><strong>Exchange Window:</strong> 30 days — free size/color exchange</li>
+        <li><strong>Refund Timeline:</strong> 5-7 business days to original payment method</li>
+        <li>Items must be unused, unwashed, with original tags attached</li>
+        <li>Innerwear, sale items marked "Final Sale" are non-returnable</li>
+        <li>Free pickup available in 200+ cities</li>
+        <li>Initiate return via website, app, or WhatsApp at 98100-77991</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section warm" id="faq">
+  <div class="section-tag">Help</div>
+  <div class="section-title" style="margin-bottom:40px;">Frequently Asked Questions</div>
+  <div class="faq">
+    <div class="faq-item open">
+      <div class="faq-q">What sizes do you offer?</div>
+      <div class="faq-a">StyleNest offers sizes from XS to 3XL for most categories. Our size chart is available on every product page. We also offer Plus Size collections with dedicated fits for sizes 2XL and above. If you're between sizes, our chatbot can help you find the right fit based on your measurements.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">How long does delivery take?</div>
+      <div class="faq-a">Standard delivery takes 4-7 business days. Express delivery (1-3 days) is available at ₹199. Same-day delivery is available in Mumbai, Delhi, Bangalore, and Hyderabad. Orders placed before 2 PM are dispatched the same day.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">What is your return policy?</div>
+      <div class="faq-a">We offer 30-day hassle-free returns on most products. Items should be unused, unwashed, and with original tags. Refunds are processed within 5-7 business days. Free returns are available via pickup in 200+ cities. You can initiate a return through the website, app, or WhatsApp.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Are the product images accurate?</div>
+      <div class="faq-a">We use professional photography with accurate color representation. However, slight variations may occur due to screen calibration. All product descriptions include exact fabric composition, measurements, and care instructions. We have a 100% return policy if the product doesn't match the description.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Do you offer Cash on Delivery?</div>
+      <div class="faq-a">Yes, COD is available across all 28,000+ pincodes we serve. A ₹50 handling charge applies to COD orders. We accept all major UPI apps, credit/debit cards, net banking, and EMI options with 0% interest on orders above ₹2,999.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">How do I track my order?</div>
+      <div class="faq-a">Once your order is dispatched, you'll receive a tracking link via SMS and email. You can also track orders through your StyleNest account dashboard or by contacting our support team at hello@stylenest.in or calling 1800-103-7799.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Do you have a loyalty or membership programme?</div>
+      <div class="faq-a">Yes! StyleNest Gold membership is available at ₹299/year. Benefits include free express delivery, early access to sales, exclusive member discounts (extra 10% on all orders), birthday rewards, and priority customer support.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Are your products genuine and quality-checked?</div>
+      <div class="faq-a">Absolutely. Every product on StyleNest goes through a 12-point quality check before dispatch. We work directly with verified manufacturers and certified brands. StyleNest Originals are our in-house label, manufactured under strict quality guidelines. All partner brands like Arrow, Manyavar, and Libas are officially authorised sellers.</div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="section dark" id="contact">
+  <div class="contact-grid">
+    <div class="contact-info">
+      <div class="section-tag">Get in Touch</div>
+      <h3>We're Here to Help</h3>
+      <div class="contact-item">
+        <div class="contact-icon">📞</div>
+        <div>
+          <h4>Phone Support</h4>
+          <p>1800-103-7799 (Toll Free)<br>Mon–Sat, 9 AM – 8 PM</p>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">✉️</div>
+        <div>
+          <h4>Email Us</h4>
+          <a href="mailto:hello@stylenest.in">hello@stylenest.in</a><br>
+          <p>Typically responds within 4 hours</p>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">💬</div>
+        <div>
+          <h4>WhatsApp Support</h4>
+          <a href="#">+91 98100-77991</a><br>
+          <p>Available 24/7 for order queries</p>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-icon">🏢</div>
+        <div>
+          <h4>Head Office</h4>
+          <p>StyleNest Fashion Pvt. Ltd.<br>Level 8, Platina Tower, BKC<br>Mumbai, Maharashtra 400051</p>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div class="section-tag" style="color:var(--blush);">Message Us</div>
+      <div style="color:var(--white);font-family:'Cormorant Garamond',serif;font-size:32px;margin-bottom:32px;font-weight:400;">Send a Message</div>
+      <div class="contact-form">
+        <input type="text" placeholder="Your Name">
+        <input type="email" placeholder="Email Address">
+        <select><option>Order Query</option><option>Return / Exchange</option><option>Product Question</option><option>Partnership</option><option>Other</option></select>
+        <textarea placeholder="Tell us how we can help you..."></textarea>
+        <button class="btn-primary">Send Message</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">Style<span>Nest</span></div>
+  <p>📞 1800-103-7799 &nbsp;|&nbsp; ✉️ hello@stylenest.in</p>
+</footer>
+
+<script>
+  document.querySelectorAll('.faq-item').forEach(function(item){
+    item.addEventListener('click', function(){
+      item.classList.toggle('open');
+    });
+  });
+</script>
+<script src="http://localhost:8000/widget/chatbot.js" data-client-id="9893a465-1be3-4685-9482-d9b995ce9ce0" data-api-key="aa34d49f-5353-42ad-9f9a-73b7b7a8e98b" defer></script>
+</body>
+</html>

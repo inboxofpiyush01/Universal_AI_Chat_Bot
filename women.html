@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Women's Fashion — StyleNest</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root { --black:#0D0D0D; --white:#FAFAF8; --blush:#E8C5B0; --rose:#C0616A; --sage:#7D9B76; --warm:#F5EFE6; --mid:#8A8070; }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:'Jost',sans-serif;background:var(--white);color:var(--black);}
+  nav{display:flex;align-items:center;justify-content:space-between;padding:18px 64px;background:var(--black);position:sticky;top:0;z-index:200;}
+  .logo{font-family:'Cormorant Garamond',serif;font-size:26px;color:var(--white);letter-spacing:3px;font-weight:600;text-decoration:none;display:block;}
+  .logo span{color:var(--blush);}
+  nav ul{display:flex;gap:36px;list-style:none;}
+  nav ul a{color:#bbb;text-decoration:none;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;transition:color 0.2s;}
+  nav ul a:hover,nav ul a.active{color:var(--blush);}
+  .nav-actions{display:flex;gap:20px;}
+  .nav-actions a{color:#bbb;text-decoration:none;font-size:13px;letter-spacing:1px;text-transform:uppercase;}
+
+  .page-hero{background:var(--black);padding:64px;display:flex;align-items:flex-end;gap:16px;min-height:260px;background-image:url('https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=1400');background-size:cover;background-position:center;position:relative;}
+  .page-hero::after{content:'';position:absolute;inset:0;background:rgba(0,0,0,0.55);}
+  .page-hero-text{position:relative;z-index:1;}
+  .page-tag{color:var(--blush);font-size:11px;letter-spacing:4px;text-transform:uppercase;margin-bottom:12px;}
+  .page-hero h1{font-family:'Cormorant Garamond',serif;font-size:56px;color:white;font-weight:300;}
+
+  .breadcrumb{padding:16px 64px;background:var(--warm);font-size:13px;color:var(--mid);}
+  .breadcrumb a{color:var(--mid);text-decoration:none;}
+  .breadcrumb a:hover{color:var(--rose);}
+
+  .layout{display:grid;grid-template-columns:240px 1fr;gap:0;min-height:80vh;}
+
+  /* FILTERS SIDEBAR */
+  .filters{padding:40px 32px;background:white;border-right:1px solid #eee;position:sticky;top:70px;height:calc(100vh - 70px);overflow-y:auto;}
+  .filter-section{margin-bottom:36px;}
+  .filter-title{font-size:11px;letter-spacing:2px;text-transform:uppercase;font-weight:600;margin-bottom:16px;color:var(--black);}
+  .filter-option{display:flex;align-items:center;gap:10px;margin-bottom:10px;cursor:pointer;}
+  .filter-option input{accent-color:var(--rose);}
+  .filter-option label{font-size:14px;color:#555;cursor:pointer;}
+  .filter-option label span{color:var(--mid);font-size:12px;}
+  .price-range{font-size:13px;color:var(--mid);margin-top:8px;}
+
+  /* PRODUCTS */
+  .products-area{padding:40px 48px;}
+  .products-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:36px;}
+  .products-count{font-size:14px;color:var(--mid);}
+  .sort-select{padding:8px 16px;border:1px solid #ddd;font-family:'Jost',sans-serif;font-size:13px;background:white;cursor:pointer;}
+  .products-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;}
+  .product-card{cursor:pointer;text-decoration:none;color:inherit;display:block;}
+  .product-img{position:relative;height:380px;overflow:hidden;background:#f0ebe4;}
+  .product-img img{width:100%;height:100%;object-fit:cover;transition:transform 0.4s;}
+  .product-card:hover .product-img img{transform:scale(1.04);}
+  .product-badge{position:absolute;top:14px;left:14px;padding:4px 10px;font-size:11px;letter-spacing:1px;text-transform:uppercase;}
+  .badge-sale{background:var(--rose);color:white;}
+  .badge-new{background:var(--sage);color:white;}
+  .badge-hot{background:#e8a020;color:white;}
+  .product-wish{position:absolute;top:14px;right:14px;background:white;border-radius:50%;width:34px;height:34px;display:flex;align-items:center;justify-content:center;font-size:16px;cursor:pointer;}
+  .product-info{padding:18px 4px 0;}
+  .product-brand{font-size:11px;color:var(--mid);letter-spacing:2px;text-transform:uppercase;margin-bottom:4px;}
+  .product-name{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:400;margin-bottom:8px;line-height:1.3;}
+  .product-price{font-size:15px;font-weight:500;color:var(--rose);}
+  .product-price .old{text-decoration:line-through;color:#bbb;font-weight:300;margin-right:8px;font-size:13px;}
+  .product-sizes{font-size:12px;color:var(--mid);margin-top:6px;}
+  .product-rating{font-size:12px;color:#e8a020;margin-top:4px;}
+
+  /* CATEGORY SECTIONS */
+  .cat-section{margin-bottom:56px;}
+  .cat-section-title{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:400;margin-bottom:4px;padding-bottom:12px;border-bottom:1px solid #eee;}
+  .cat-section-sub{font-size:13px;color:var(--mid);margin-bottom:28px;margin-top:8px;}
+
+  footer{background:var(--black);padding:32px 64px;display:flex;justify-content:space-between;align-items:center;}
+  .footer-logo{font-family:'Cormorant Garamond',serif;font-size:20px;color:var(--white);}
+  .footer-logo span{color:var(--blush);}
+  footer p{color:#555;font-size:13px;}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="logo" href="index.html">Style<span>Nest</span></a>
+  <ul>
+    <li><a href="index.html">Home</a></li>
+    <li><a href="women.html" class="active">Women</a></li>
+    <li><a href="men.html">Men</a></li>
+    <li><a href="accessories.html">Accessories</a></li>
+    <li><a href="sale.html">Sale</a></li>
+    <li><a href="about.html">About</a></li>
+  </ul>
+  <div class="nav-actions">
+    <a href="#">Wishlist</a>
+    <a href="#">Cart (0)</a>
+  </div>
+</nav>
+
+<div class="page-hero">
+  <div class="page-hero-text">
+    <div class="page-tag">Spring / Summer 2026</div>
+    <h1>Women's Collection</h1>
+  </div>
+</div>
+
+<div class="breadcrumb">
+  <a href="index.html">Home</a> &nbsp;/&nbsp; Women's Fashion
+</div>
+
+<div class="layout">
+  <!-- SIDEBAR FILTERS -->
+  <aside class="filters">
+    <div class="filter-section">
+      <div class="filter-title">Category</div>
+      <div class="filter-option"><input type="checkbox" id="c1" checked><label for="c1">All Women's</label></div>
+      <div class="filter-option"><input type="checkbox" id="c2"><label for="c2">Dresses <span>(48)</span></label></div>
+      <div class="filter-option"><input type="checkbox" id="c3"><label for="c3">Tops & Blouses <span>(62)</span></label></div>
+      <div class="filter-option"><input type="checkbox" id="c4"><label for="c4">Sarees <span>(95)</span></label></div>
+      <div class="filter-option"><input type="checkbox" id="c5"><label for="c5">Kurtis <span>(110)</span></label></div>
+      <div class="filter-option"><input type="checkbox" id="c6"><label for="c6">Jeans & Pants <span>(44)</span></label></div>
+      <div class="filter-option"><input type="checkbox" id="c7"><label for="c7">Lehengas <span>(28)</span></label></div>
+      <div class="filter-option"><input type="checkbox" id="c8"><label for="c8">Activewear <span>(36)</span></label></div>
+    </div>
+    <div class="filter-section">
+      <div class="filter-title">Price Range</div>
+      <div class="filter-option"><input type="checkbox" id="p1"><label for="p1">Under ₹500</label></div>
+      <div class="filter-option"><input type="checkbox" id="p2"><label for="p2">₹500 – ₹1,500</label></div>
+      <div class="filter-option"><input type="checkbox" id="p3" checked><label for="p3">₹1,500 – ₹3,000</label></div>
+      <div class="filter-option"><input type="checkbox" id="p4"><label for="p4">₹3,000 – ₹6,000</label></div>
+      <div class="filter-option"><input type="checkbox" id="p5"><label for="p5">Above ₹6,000</label></div>
+    </div>
+    <div class="filter-section">
+      <div class="filter-title">Size</div>
+      <div class="filter-option"><input type="checkbox" id="s1"><label for="s1">XS</label></div>
+      <div class="filter-option"><input type="checkbox" id="s2"><label for="s2">S</label></div>
+      <div class="filter-option"><input type="checkbox" id="s3" checked><label for="s3">M</label></div>
+      <div class="filter-option"><input type="checkbox" id="s4" checked><label for="s4">L</label></div>
+      <div class="filter-option"><input type="checkbox" id="s5"><label for="s5">XL</label></div>
+      <div class="filter-option"><input type="checkbox" id="s6"><label for="s6">XXL</label></div>
+      <div class="filter-option"><input type="checkbox" id="s7"><label for="s7">3XL</label></div>
+    </div>
+    <div class="filter-section">
+      <div class="filter-title">Color</div>
+      <div class="filter-option"><input type="checkbox" id="col1"><label for="col1">Black</label></div>
+      <div class="filter-option"><input type="checkbox" id="col2"><label for="col2">White</label></div>
+      <div class="filter-option"><input type="checkbox" id="col3"><label for="col3">Red / Pink</label></div>
+      <div class="filter-option"><input type="checkbox" id="col4"><label for="col4">Blue</label></div>
+      <div class="filter-option"><input type="checkbox" id="col5"><label for="col5">Green</label></div>
+      <div class="filter-option"><input type="checkbox" id="col6"><label for="col6">Multicolour</label></div>
+    </div>
+    <div class="filter-section">
+      <div class="filter-title">Brand</div>
+      <div class="filter-option"><input type="checkbox" id="b1"><label for="b1">StyleNest Originals</label></div>
+      <div class="filter-option"><input type="checkbox" id="b2"><label for="b2">Rang Manch</label></div>
+      <div class="filter-option"><input type="checkbox" id="b3"><label for="b3">Aurelia</label></div>
+      <div class="filter-option"><input type="checkbox" id="b4"><label for="b4">Libas</label></div>
+      <div class="filter-option"><input type="checkbox" id="b5"><label for="b5">ONLY</label></div>
+    </div>
+  </aside>
+
+  <!-- PRODUCT LISTING -->
+  <div class="products-area">
+    <div class="products-header">
+      <div class="products-count">Showing 423 products in Women's Fashion</div>
+      <select class="sort-select">
+        <option>Sort: Best Sellers</option>
+        <option>Price: Low to High</option>
+        <option>Price: High to Low</option>
+        <option>Newest First</option>
+        <option>Top Rated</option>
+      </select>
+    </div>
+
+    <!-- DRESSES -->
+    <div class="cat-section" id="dresses">
+      <div class="cat-section-title">Dresses</div>
+      <div class="cat-section-sub">From casual sundresses to formal evening gowns — find your perfect fit</div>
+      <div class="products-grid">
+        <a class="product-card" href="#silk-dress" id="silk-dress">
+          <div class="product-img">
+            <img src="https://images.unsplash.com/photo-1496747611176-843222e1e57c?w=500" alt="Silk Wrap Midi Dress">
+            <span class="product-badge badge-sale">40% Off</span>
+            <span class="product-wish">♡</span>
+          </div>
+          <div class="product-info">
+            <div class="product-brand">StyleNest Originals</div>
+            <div class="product-name">Silk Wrap Midi Dress</div>
+            <div class="product-price"><span class="old">₹4,999</span>₹2,999</div>
+            <div class="product-sizes">Sizes: XS, S, M, L, XL | Colors: Ivory, Blush, Black</div>
+            <div class="product-rating">★★★★★ (412 reviews)</div>
+          </div>
+        </a>
+        <a class="product-card" href="#floral-maxi">
+          <div class="product-img">
+            <img src="https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?w=500" alt="Floral Maxi Dress">
+            <span class="product-badge badge-new">New</span>
+            <span class="product-wish">♡</span>
+          </div>
+          <div class="product-info">
+            <div class="product-brand">ONLY</div>
+            <div class="product-name">Boho Floral Maxi Dress</div>
+            <div class="product-price">₹3,499</div>
+            <div class="product-sizes">Sizes: XS, S, M, L, XL | Colors: Floral Multi, Blue Floral</div>
+            <div class="product-rating">★★★★☆ (187 reviews)</div>
+          </div>
+        </a>
+        <a class="product-card" href="#bodycon-dress">
+          <div class="product-img">
+            <img src="https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?w=500" alt="Bodycon Dress">
+            <span class="product-badge badge-sale">25% Off</span>
+          </div>
+          <div class="product-info">
+            <div class="product-brand">StyleNest Originals</div>
+            <div class="product-name">Ribbed Bodycon Midi Dress</div>
+            <div class="product-price"><span class="old">₹2,299</span>₹1,724</div>
+            <div class="product-sizes">Sizes: XS, S, M, L, XL | Colors: Black, Burgundy, Olive</div>
+            <div class="product-rating">★★★★★ (298 reviews)</div>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <!-- TOPS & BLOUSES -->
+    <div class="cat-section" id="tops">
+      <div class="cat-section-title">Tops & Blouses</div>
+      <div class="cat-section-sub">Everyday staples to elevated styles for every occasion</div>
+      <div class="products-grid">
+        <a class="product-card" href="#chiffon-top">
+          <div class="product-img">
+            <img src="https://images.unsplash.com/photo-1485462537746-965f33f7f6a7?w=500" alt="Chiffon Top">
+            <span class="product-badge badge-new">New Arrival</span>
+          </div>
+          <div class="product-info">
+            <div class="product-brand">Libas</div>
+            <div class="product-name">Chiffon Ruffled Sleeve Top</div>
+            <div class="product-price">₹899</div>
+            <div class="product-sizes">Sizes: XS, S, M, L, XL, XXL | Colors: White, Pink, Sky Blue</div>
+            <div class="product-rating">★★★★☆ (224 reviews)</div>
+          </div>
+        </a>
+        <a class="product-card" href="#crop-top">
+          <div class="product-img">
+            <img src="https://images.unsplash.com/photo-1434389677669-e08b4cac3105?w=500" alt="Crop Top">
+            <span class="product-badge badge-hot">Hot</span>
+          </div>
+          <div class="product-info">
+            <div class="product-brand">StyleNest Originals</div>
+            <div class="product-name">Cotton Crop Top</div>
+            <div class="product-price">₹599</div>
+            <div class="product-sizes">Sizes: XS, S, M, L, XL | Colors: 12 colors available</div>
+            <div class="product-rating">★★★★★ (856 reviews)</div>
+          </div>
+        </a>
+        <a class="product-card" href="#formal-blouse">
+          <div class="product-img">
+            <img src="https://images.unsplash.com/photo-1598554747436-c9293d6a588f?w=500" alt="Formal Blouse">
+          </div>
+          <div class="product-info">
+            <div class="product-brand">Aurelia</div>
+            <div class="product-name">Satin Formal Office Blouse</div>
+            <div class="product-price">₹1,299</div>
+            <div class="product-sizes">Sizes: XS, S, M, L, XL, XXL | Colors: Ivory, Black, Navy</div>
+            <div class="product-rating">★★★★☆ (341 reviews)</div>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <!-- SAREES -->
+    <div class="cat-section" id="sarees">
+      <div class="cat-section-title">Sarees</div>
+      <div class="cat-section-sub">Premium silks, georgettes, and chiffons — traditional elegance redefined</div>
+      <div class="products-grid">
+        <a class="product-card" href="#silk-saree">
+          <div class="product-img">
+            <img src="https://images.unsplash.com/photo-1583391733956-6c78276477e2?w=500" alt="Banarasi Silk Saree">
+            <span class="product-badge badge-sale">30% Off</span>
+          </div>
+          <div class="product-info">
+            <div class="product-brand">Rang Manch</div>
+            <div class="product-name">Banarasi Pure Silk Saree</div>
+            <div class="product-price"><span class="old">₹8,999</span>₹6,299</div>
+            <div class="product-sizes">Free size (5.5m) | Colors: Red-Gold, Royal Blue, Maroon</div>
+            <div class="product-rating">★★★★★ (534 reviews)</div>
+          </div>
+        </a>
+        <a class="product-card" href="#georgette-saree">
+          <div class="product-img">
+            <img src="https://images.unsplash.com/photo-1617719344798-e7baf35b4e14?w=500" alt="Georgette Saree">
+            <span class="product-badge badge-new">New</span>
+          </div>
+          <div class="product-info">
+            <div class="product-brand">Libas</div>
+            <div class="product-name">Printed Georgette Party Saree</div>
+            <div class="product-price">₹2,499</div>
+            <div class="product-sizes">Free size (5.5m) | Colors: Teal, Purple, Pink</div>
+            <div class="product-rating">★★★★☆ (198 reviews)</div>
+          </div>
+        </a>
+        <a class="product-card" href="#cotton-saree">
+          <div class="product-img">
+            <img src="https://images.unsplash.com/photo-1610189019599-0d03ea1f3f42?w=500" alt="Cotton Saree">
+          </div>
+          <div class="product-info">
+            <div class="product-brand">Rang Manch</div>
+            <div class="product-name">Handloom Cotton Daily Wear Saree</div>
+            <div class="product-price">₹1,199</div>
+            <div class="product-sizes">Free size (5.5m) | Colors: 25 prints available</div>
+            <div class="product-rating">★★★★★ (762 reviews)</div>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <!-- KURTIS -->
+    <div class="cat-section" id="kurtis">
+      <div class="cat-section-title">Kurtis & Ethnic Tops</div>
+      <div class="cat-section-sub">From office wear to festive looks — India's favourite ethnic essential</div>
+      <div class="products-grid">
+        <a class="product-card" href="#floral-kurti" id="floral-kurti">
+          <div class="product-img">
+            <img src="https://images.unsplash.com/photo-1623173059261-fc1e3f57e2e3?w=500" alt="Floral Kurti">
+            <span class="product-badge badge-sale">38% Off</span>
+          </div>
+          <div class="product-info">
+            <div class="product-brand">Rang Manch</div>
+            <div class="product-name">Printed Floral A-Line Kurti</div>
+            <div class="product-price"><span class="old">₹1,299</span>₹799</div>
+            <div class="product-sizes">Sizes: S, M, L, XL, XXL, 3XL | Colors: Floral Red, Floral Blue, Yellow</div>
+            <div class="product-rating">★★★★★ (1,204 reviews)</div>
+          </div>
+        </a>
+        <a class="product-card" href="#anarkali-kurti">
+          <div class="product-img">
+            <img src="https://images.unsplash.com/photo-1609709295948-17d77cb2a69b?w=500" alt="Anarkali Kurti">
+            <span class="product-badge badge-hot">Best Seller</span>
+          </div>
+          <div class="product-info">
+            <div class="product-brand">Aurelia</div>
+            <div class="product-name">Embroidered Anarkali Kurti</div>
+            <div class="product-price">₹2,199</div>
+            <div class="product-sizes">Sizes: S, M, L, XL, XXL | Colors: Peach, Navy, Emerald</div>
+            <div class="product-rating">★★★★★ (678 reviews)</div>
+          </div>
+        </a>
+        <a class="product-card" href="#straight-kurti">
+          <div class="product-img">
+            <img src="https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?w=500" alt="Straight Kurti">
+          </div>
+          <div class="product-info">
+            <div class="product-brand">Libas</div>
+            <div class="product-name">Linen Straight Kurta Set</div>
+            <div class="product-price">₹1,699</div>
+            <div class="product-sizes">Sizes: S, M, L, XL, XXL, 3XL | Colors: White, Grey, Pastel Pink</div>
+            <div class="product-rating">★★★★☆ (441 reviews)</div>
+          </div>
+        </a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  <div class="footer-logo">Style<span>Nest</span></div>
+  <p>📞 1800-103-7799 &nbsp;|&nbsp; ✉️ hello@stylenest.in</p>
+</footer>
+<script src="http://localhost:8000/widget/chatbot.js" data-client-id="9893a465-1be3-4685-9482-d9b995ce9ce0" data-api-key="aa34d49f-5353-42ad-9f9a-73b7b7a8e98b" defer></script>
+</body>
+</html>

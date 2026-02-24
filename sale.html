@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sale — Up to 40% Off — StyleNest</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{--black:#0D0D0D;--white:#FAFAF8;--blush:#E8C5B0;--rose:#C0616A;--sage:#7D9B76;--warm:#F5EFE6;--mid:#8A8070;}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:'Jost',sans-serif;background:var(--white);color:var(--black);}
+  nav{display:flex;align-items:center;justify-content:space-between;padding:18px 64px;background:var(--black);position:sticky;top:0;z-index:200;}
+  .logo{font-family:'Cormorant Garamond',serif;font-size:26px;color:var(--white);letter-spacing:3px;font-weight:600;text-decoration:none;}
+  .logo span{color:var(--blush);}
+  nav ul{display:flex;gap:36px;list-style:none;}
+  nav ul a{color:#bbb;text-decoration:none;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;transition:color 0.2s;}
+  nav ul a:hover,nav ul a.active{color:var(--blush);}
+  .nav-actions{display:flex;gap:20px;}
+  .nav-actions a{color:#bbb;text-decoration:none;font-size:13px;text-transform:uppercase;}
+
+  .sale-hero{background:var(--rose);padding:80px 64px;text-align:center;}
+  .sale-hero .tag{font-size:12px;letter-spacing:4px;text-transform:uppercase;color:rgba(255,255,255,0.7);margin-bottom:16px;}
+  .sale-hero h1{font-family:'Cormorant Garamond',serif;font-size:80px;color:white;font-weight:300;line-height:1;}
+  .sale-hero p{color:rgba(255,255,255,0.8);font-size:17px;margin-top:20px;font-weight:300;}
+  .sale-hero .countdown{display:flex;gap:32px;justify-content:center;margin-top:36px;}
+  .count-box{background:rgba(0,0,0,0.2);padding:20px 28px;color:white;min-width:90px;}
+  .count-num{font-family:'Cormorant Garamond',serif;font-size:48px;font-weight:600;display:block;}
+  .count-label{font-size:11px;letter-spacing:2px;text-transform:uppercase;opacity:0.7;}
+
+  .sale-banner{display:grid;grid-template-columns:repeat(3,1fr);}
+  .sale-cat{position:relative;height:240px;overflow:hidden;text-decoration:none;}
+  .sale-cat img{width:100%;height:100%;object-fit:cover;transition:transform 0.4s;}
+  .sale-cat:hover img{transform:scale(1.05);}
+  .sale-cat::after{content:'';position:absolute;inset:0;background:rgba(0,0,0,0.45);}
+  .sale-cat-text{position:absolute;inset:0;z-index:1;display:flex;flex-direction:column;align-items:center;justify-content:center;color:white;text-align:center;}
+  .sale-cat-text h3{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:400;}
+  .sale-cat-text .disc{font-size:20px;font-weight:600;color:var(--blush);margin-top:4px;}
+
+  .section{padding:72px 64px;}
+  .section.warm{background:var(--warm);}
+  .section-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:44px;}
+  .section-title{font-family:'Cormorant Garamond',serif;font-size:42px;font-weight:400;}
+  .section-sub{color:var(--mid);font-size:14px;margin-top:6px;}
+  .view-all{color:var(--rose);text-decoration:none;font-size:13px;letter-spacing:1px;text-transform:uppercase;border-bottom:1px solid var(--rose);padding-bottom:2px;}
+
+  .products-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:28px;}
+  .product-card{cursor:pointer;text-decoration:none;color:inherit;display:block;}
+  .product-img{position:relative;height:300px;overflow:hidden;background:#f0ebe4;}
+  .product-img img{width:100%;height:100%;object-fit:cover;transition:transform 0.4s;}
+  .product-card:hover .product-img img{transform:scale(1.04);}
+  .product-badge{position:absolute;top:12px;left:12px;padding:4px 10px;font-size:11px;letter-spacing:1px;text-transform:uppercase;}
+  .badge-sale{background:var(--rose);color:white;}
+  .badge-new{background:var(--sage);color:white;}
+  .product-info{padding:16px 4px 0;}
+  .product-brand{font-size:11px;color:var(--mid);letter-spacing:2px;text-transform:uppercase;margin-bottom:4px;}
+  .product-name{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:400;margin-bottom:6px;}
+  .product-price{font-size:14px;font-weight:500;color:var(--rose);}
+  .product-price .old{text-decoration:line-through;color:#bbb;font-weight:300;margin-right:8px;font-size:12px;}
+  .product-price .save{color:var(--sage);font-size:12px;margin-left:6px;}
+  .product-sizes{font-size:12px;color:var(--mid);margin-top:6px;}
+  .product-rating{font-size:12px;color:#e8a020;margin-top:4px;}
+
+  .offer-strip{background:var(--black);padding:24px 64px;display:flex;justify-content:center;gap:64px;align-items:center;}
+  .offer-item{text-align:center;color:white;}
+  .offer-item strong{display:block;font-family:'Cormorant Garamond',serif;font-size:22px;color:var(--blush);}
+  .offer-item span{font-size:12px;color:#777;letter-spacing:1px;text-transform:uppercase;}
+
+  footer{background:var(--black);padding:32px 64px;display:flex;justify-content:space-between;align-items:center;}
+  .footer-logo{font-family:'Cormorant Garamond',serif;font-size:20px;color:var(--white);}
+  .footer-logo span{color:var(--blush);}
+  footer p{color:#555;font-size:13px;}
+</style>
+</head>
+<body>
+<nav>
+  <a class="logo" href="index.html">Style<span>Nest</span></a>
+  <ul>
+    <li><a href="index.html">Home</a></li>
+    <li><a href="women.html">Women</a></li>
+    <li><a href="men.html">Men</a></li>
+    <li><a href="accessories.html">Accessories</a></li>
+    <li><a href="sale.html" class="active">Sale</a></li>
+    <li><a href="about.html">About</a></li>
+  </ul>
+  <div class="nav-actions"><a href="#">Wishlist</a><a href="#">Cart (0)</a></div>
+</nav>
+
+<!-- SALE HERO -->
+<div class="sale-hero">
+  <div class="tag">Limited Time Offer</div>
+  <h1>Up to 40% Off</h1>
+  <p>End of season clearance — biggest sale of the year. Shop before it's gone.</p>
+  <div class="countdown">
+    <div class="count-box"><span class="count-num" id="days">03</span><span class="count-label">Days</span></div>
+    <div class="count-box"><span class="count-num" id="hours">14</span><span class="count-label">Hours</span></div>
+    <div class="count-box"><span class="count-num" id="mins">22</span><span class="count-label">Minutes</span></div>
+    <div class="count-box"><span class="count-num" id="secs">45</span><span class="count-label">Seconds</span></div>
+  </div>
+</div>
+
+<!-- SALE CATEGORIES -->
+<div class="sale-banner">
+  <a class="sale-cat" href="women.html">
+    <img src="https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=700" alt="Women's Sale">
+    <div class="sale-cat-text"><h3>Women</h3><div class="disc">Up to 40% Off</div></div>
+  </a>
+  <a class="sale-cat" href="men.html">
+    <img src="https://images.unsplash.com/photo-1617137968427-85924c800a22?w=700" alt="Men's Sale">
+    <div class="sale-cat-text"><h3>Men</h3><div class="disc">Up to 35% Off</div></div>
+  </a>
+  <a class="sale-cat" href="accessories.html">
+    <img src="https://images.unsplash.com/photo-1611085583191-a3b181a88401?w=700" alt="Accessories Sale">
+    <div class="sale-cat-text"><h3>Accessories</h3><div class="disc">Up to 30% Off</div></div>
+  </a>
+</div>
+
+<!-- OFFERS STRIP -->
+<div class="offer-strip">
+  <div class="offer-item"><strong>FREE DELIVERY</strong><span>On all orders above ₹999</span></div>
+  <div class="offer-item"><strong>EXTRA 10% OFF</strong><span>Use code NEST10 at checkout</span></div>
+  <div class="offer-item"><strong>30-DAY RETURNS</strong><span>Hassle-free exchange & returns</span></div>
+  <div class="offer-item"><strong>EMI AVAILABLE</strong><span>0% EMI on orders above ₹2,999</span></div>
+</div>
+
+<!-- TOP DEALS -->
+<section class="section">
+  <div class="section-header">
+    <div>
+      <div class="section-title">Top Deals Today</div>
+      <div class="section-sub">Handpicked best discounts — updated daily</div>
+    </div>
+    <a class="view-all" href="women.html">View All</a>
+  </div>
+  <div class="products-grid">
+    <a class="product-card" href="women.html#silk-dress">
+      <div class="product-img">
+        <img src="https://images.unsplash.com/photo-1496747611176-843222e1e57c?w=500" alt="Silk Wrap Dress">
+        <span class="product-badge badge-sale">40% Off</span>
+      </div>
+      <div class="product-info">
+        <div class="product-brand">StyleNest Originals</div>
+        <div class="product-name">Silk Wrap Midi Dress</div>
+        <div class="product-price"><span class="old">₹4,999</span>₹2,999 <span class="save">Save ₹2,000</span></div>
+        <div class="product-sizes">Sizes: XS, S, M, L, XL</div>
+        <div class="product-rating">★★★★★ (412 reviews)</div>
+      </div>
+    </a>
+    <a class="product-card" href="men.html#bomber-jacket">
+      <div class="product-img">
+        <img src="https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=500" alt="Bomber Jacket">
+        <span class="product-badge badge-sale">35% Off</span>
+      </div>
+      <div class="product-info">
+        <div class="product-brand">StyleNest Men</div>
+        <div class="product-name">Classic Bomber Jacket</div>
+        <div class="product-price"><span class="old">₹3,999</span>₹2,599 <span class="save">Save ₹1,400</span></div>
+        <div class="product-sizes">Sizes: S, M, L, XL, XXL</div>
+        <div class="product-rating">★★★★★ (521 reviews)</div>
+      </div>
+    </a>
+    <a class="product-card" href="accessories.html#tote-bag">
+      <div class="product-img">
+        <img src="https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=500" alt="Leather Tote">
+        <span class="product-badge badge-sale">40% Off</span>
+      </div>
+      <div class="product-info">
+        <div class="product-brand">LuxeCarry</div>
+        <div class="product-name">Genuine Leather Tote Bag</div>
+        <div class="product-price"><span class="old">₹5,499</span>₹3,299 <span class="save">Save ₹2,200</span></div>
+        <div class="product-sizes">Colors: Tan, Black, Burgundy</div>
+        <div class="product-rating">★★★★★ (634 reviews)</div>
+      </div>
+    </a>
+    <a class="product-card" href="women.html#silk-saree">
+      <div class="product-img">
+        <img src="https://images.unsplash.com/photo-1583391733956-6c78276477e2?w=500" alt="Silk Saree">
+        <span class="product-badge badge-sale">30% Off</span>
+      </div>
+      <div class="product-info">
+        <div class="product-brand">Rang Manch</div>
+        <div class="product-name">Banarasi Pure Silk Saree</div>
+        <div class="product-price"><span class="old">₹8,999</span>₹6,299 <span class="save">Save ₹2,700</span></div>
+        <div class="product-sizes">Free size | Colors: Red-Gold, Blue, Maroon</div>
+        <div class="product-rating">★★★★★ (534 reviews)</div>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- UNDER 999 -->
+<section class="section warm">
+  <div class="section-header">
+    <div>
+      <div class="section-title">Under ₹999</div>
+      <div class="section-sub">Great fashion doesn't have to break the bank</div>
+    </div>
+    <a class="view-all" href="women.html">View All</a>
+  </div>
+  <div class="products-grid">
+    <a class="product-card" href="women.html#floral-kurti">
+      <div class="product-img">
+        <img src="https://images.unsplash.com/photo-1623173059261-fc1e3f57e2e3?w=500" alt="Floral Kurti">
+        <span class="product-badge badge-sale">38% Off</span>
+      </div>
+      <div class="product-info">
+        <div class="product-brand">Rang Manch</div>
+        <div class="product-name">Printed Floral A-Line Kurti</div>
+        <div class="product-price"><span class="old">₹1,299</span>₹799</div>
+        <div class="product-sizes">Sizes: S to 3XL</div>
+        <div class="product-rating">★★★★★ (1,204 reviews)</div>
+      </div>
+    </a>
+    <a class="product-card" href="women.html#crop-top">
+      <div class="product-img">
+        <img src="https://images.unsplash.com/photo-1434389677669-e08b4cac3105?w=500" alt="Crop Top">
+      </div>
+      <div class="product-info">
+        <div class="product-brand">StyleNest Originals</div>
+        <div class="product-name">Cotton Crop Top (Pack of 2)</div>
+        <div class="product-price">₹799</div>
+        <div class="product-sizes">Sizes: XS, S, M, L, XL | 12 colors</div>
+        <div class="product-rating">★★★★★ (856 reviews)</div>
+      </div>
+    </a>
+    <a class="product-card" href="men.html#round-neck-tshirt">
+      <div class="product-img">
+        <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=500" alt="T-Shirt">
+      </div>
+      <div class="product-info">
+        <div class="product-brand">StyleNest Men</div>
+        <div class="product-name">Classic Cotton Tee (Pack of 3)</div>
+        <div class="product-price">₹999</div>
+        <div class="product-sizes">Sizes: S to 3XL | 20 solid colors</div>
+        <div class="product-rating">★★★★★ (2,134 reviews)</div>
+      </div>
+    </a>
+    <a class="product-card" href="accessories.html#jhumka-earrings">
+      <div class="product-img">
+        <img src="https://images.unsplash.com/photo-1630019852942-f89202989a59?w=500" alt="Earrings">
+      </div>
+      <div class="product-info">
+        <div class="product-brand">Rang Manch</div>
+        <div class="product-name">Oxidised Jhumka Earrings</div>
+        <div class="product-price">₹799</div>
+        <div class="product-sizes">Colors: Silver-Green, Blue, Red</div>
+        <div class="product-rating">★★★★★ (1,567 reviews)</div>
+      </div>
+    </a>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">Style<span>Nest</span></div>
+  <p>📞 1800-103-7799 &nbsp;|&nbsp; ✉️ hello@stylenest.in</p>
+</footer>
+
+<script>
+  // Live countdown
+  function updateCountdown() {
+    var end = new Date(); end.setHours(end.getHours() + 75);
+    var now = new Date();
+    var diff = Math.max(0, end - now);
+    var d = Math.floor(diff/86400000), h = Math.floor((diff%86400000)/3600000);
+    var m = Math.floor((diff%3600000)/60000), s = Math.floor((diff%60000)/1000);
+    document.getElementById('days').textContent = String(d).padStart(2,'0');
+    document.getElementById('hours').textContent = String(h).padStart(2,'0');
+    document.getElementById('mins').textContent = String(m).padStart(2,'0');
+    document.getElementById('secs').textContent = String(s).padStart(2,'0');
+  }
+  updateCountdown(); setInterval(updateCountdown, 1000);
+</script>
+<script src="http://localhost:8000/widget/chatbot.js" data-client-id="9893a465-1be3-4685-9482-d9b995ce9ce0" data-api-key="aa34d49f-5353-42ad-9f9a-73b7b7a8e98b" defer></script>
+</body>
+</html>

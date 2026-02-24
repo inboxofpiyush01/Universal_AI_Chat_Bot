@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Accessories — StyleNest</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{--black:#0D0D0D;--white:#FAFAF8;--blush:#E8C5B0;--rose:#C0616A;--sage:#7D9B76;--warm:#F5EFE6;--mid:#8A8070;}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:'Jost',sans-serif;background:var(--white);color:var(--black);}
+  nav{display:flex;align-items:center;justify-content:space-between;padding:18px 64px;background:var(--black);position:sticky;top:0;z-index:200;}
+  .logo{font-family:'Cormorant Garamond',serif;font-size:26px;color:var(--white);letter-spacing:3px;font-weight:600;text-decoration:none;display:block;}
+  .logo span{color:var(--blush);}
+  nav ul{display:flex;gap:36px;list-style:none;}
+  nav ul a{color:#bbb;text-decoration:none;font-size:13px;letter-spacing:1.5px;text-transform:uppercase;transition:color 0.2s;}
+  nav ul a:hover,nav ul a.active{color:var(--blush);}
+  .nav-actions{display:flex;gap:20px;}
+  .nav-actions a{color:#bbb;text-decoration:none;font-size:13px;text-transform:uppercase;}
+
+  .page-hero{padding:64px;min-height:280px;background-image:url('https://images.unsplash.com/photo-1611085583191-a3b181a88401?w=1400');background-size:cover;background-position:center;position:relative;display:flex;align-items:flex-end;}
+  .page-hero::after{content:'';position:absolute;inset:0;background:rgba(0,0,0,0.55);}
+  .page-hero-text{position:relative;z-index:1;}
+  .page-tag{color:var(--blush);font-size:11px;letter-spacing:4px;text-transform:uppercase;margin-bottom:12px;}
+  .page-hero h1{font-family:'Cormorant Garamond',serif;font-size:56px;color:white;font-weight:300;}
+  .breadcrumb{padding:16px 64px;background:var(--warm);font-size:13px;color:var(--mid);}
+  .breadcrumb a{color:var(--mid);text-decoration:none;}
+
+  .section{padding:72px 64px;}
+  .section.warm{background:var(--warm);}
+  .section-tag{color:var(--rose);font-size:11px;letter-spacing:4px;text-transform:uppercase;margin-bottom:12px;}
+  .section-title{font-family:'Cormorant Garamond',serif;font-size:42px;margin-bottom:8px;font-weight:400;}
+  .section-sub{color:var(--mid);font-size:15px;margin-bottom:44px;font-weight:300;}
+  .products-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:28px;}
+  .product-card{cursor:pointer;text-decoration:none;color:inherit;display:block;}
+  .product-img{position:relative;height:300px;overflow:hidden;background:#f0ebe4;}
+  .product-img img{width:100%;height:100%;object-fit:cover;transition:transform 0.4s;}
+  .product-card:hover .product-img img{transform:scale(1.04);}
+  .product-badge{position:absolute;top:12px;left:12px;padding:4px 10px;font-size:11px;letter-spacing:1px;text-transform:uppercase;}
+  .badge-sale{background:var(--rose);color:white;}
+  .badge-new{background:var(--sage);color:white;}
+  .badge-hot{background:#e8a020;color:white;}
+  .product-info{padding:16px 4px 0;}
+  .product-brand{font-size:11px;color:var(--mid);letter-spacing:2px;text-transform:uppercase;margin-bottom:4px;}
+  .product-name{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:400;margin-bottom:6px;}
+  .product-price{font-size:14px;font-weight:500;color:var(--rose);}
+  .product-price .old{text-decoration:line-through;color:#bbb;font-weight:300;margin-right:8px;font-size:12px;}
+  .product-desc{font-size:12px;color:var(--mid);margin-top:6px;line-height:1.5;}
+  .product-rating{font-size:12px;color:#e8a020;margin-top:4px;}
+
+  footer{background:var(--black);padding:32px 64px;display:flex;justify-content:space-between;align-items:center;}
+  .footer-logo{font-family:'Cormorant Garamond',serif;font-size:20px;color:var(--white);}
+  .footer-logo span{color:var(--blush);}
+  footer p{color:#555;font-size:13px;}
+</style>
+</head>
+<body>
+<nav>
+  <a class="logo" href="index.html">Style<span>Nest</span></a>
+  <ul>
+    <li><a href="index.html">Home</a></li>
+    <li><a href="women.html">Women</a></li>
+    <li><a href="men.html">Men</a></li>
+    <li><a href="accessories.html" class="active">Accessories</a></li>
+    <li><a href="sale.html">Sale</a></li>
+    <li><a href="about.html">About</a></li>
+  </ul>
+  <div class="nav-actions"><a href="#">Wishlist</a><a href="#">Cart (0)</a></div>
+</nav>
+
+<div class="page-hero">
+  <div class="page-hero-text">
+    <div class="page-tag">Complete Your Look</div>
+    <h1>Accessories Collection</h1>
+  </div>
+</div>
+<div class="breadcrumb"><a href="index.html">Home</a> &nbsp;/&nbsp; Accessories</div>
+
+<!-- BAGS -->
+<section class="section">
+  <div class="section-tag">Carry</div>
+  <div class="section-title">Bags & Handbags</div>
+  <div class="section-sub">From everyday totes to evening clutches — carry it in style</div>
+  <div class="products-grid">
+    <a class="product-card" href="#tote-bag" id="tote-bag">
+      <div class="product-img">
+        <img src="https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=500" alt="Leather Tote Bag">
+        <span class="product-badge badge-sale">40% Off</span>
+      </div>
+      <div class="product-info">
+        <div class="product-brand">LuxeCarry</div>
+        <div class="product-name">Genuine Leather Tote Bag</div>
+        <div class="product-price"><span class="old">₹5,499</span>₹3,299</div>
+        <div class="product-desc">Full-grain leather, 3 internal compartments, laptop sleeve. Colors: Tan, Black, Burgundy</div>
+        <div class="product-rating">★★★★★ (634 reviews)</div>
+      </div>
+    </a>
+    <a class="product-card" href="#sling-bag">
+      <div class="product-img">
+        <img src="https://images.unsplash.com/photo-1575032617751-6ddec2089882?w=500" alt="Sling Bag">
+        <span class="product-badge badge-new">New</span>
+      </div>
+      <div class="product-info">
+        <div class="product-brand">StyleNest Originals</div>
+        <div class="product-name">Mini Croc-texture Sling Bag</div>
+        <div class="product-price">₹1,299</div>
+        <div class="product-desc">Adjustable strap, magnetic closure. Colors: Black, Blush Pink, Beige</div>
+        <div class="product-rating">★★★★☆ (289 reviews)</div>
+      </div>
+    </a>
+    <a class="product-card" href="#backpack">
+      <div class="product-img">
+        <img src="https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=500" alt="Backpack">
+        <span class="product-badge badge-hot">Best Seller</span>
+      </div>
+      <div class="product-info">
+        <div class="product-brand">LuxeCarry</div>
+        <div class="product-name">Vegan Leather Laptop Backpack</div>
+        <div class="product-price">₹2,799</div>
+        <div class="product-desc">Fits 15.6" laptop, waterproof lining, USB port. Colors: Black, Brown, Sage</div>
+        <div class="product-rating">★★★★★ (1,102 reviews)</div>
+      </div>
+    </a>
+    <a class="product-card" href="#clutch">
+      <div class="product-img">
+        <img src="https://images.unsplash.com/photo-1566150905458-1bf1fc113f0d?w=500" alt="Clutch">
+      </div>
+      <div class="product-info">
+        <div class="product-brand">StyleNest Originals</div>
+        <div class="product-name">Embellished Evening Clutch</div>
+        <div class="product-price">₹1,899</div>
+        <div class="product-desc">Hand-beaded, detachable chain strap. Colors: Gold, Silver, Black</div>
+        <div class="product-rating">★★★★★ (378 reviews)</div>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- JEWELLERY -->
+<section class="section warm">
+  <div class="section-tag">Adorn</div>
+  <div class="section-title">Jewellery</div>
+  <div class="section-sub">Statement pieces and everyday classics — jewellery that tells your story</div>
+  <div class="products-grid">
+    <a class="product-card" href="#gold-necklace">
+      <div class="product-img">
+        <img src="https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?w=500" alt="Gold Necklace">
+        <span class="product-badge badge-new">New</span>
+      </div>
+      <div class="product-info">
+        <div class="product-brand">GoldBloom</div>
+        <div class="product-name">Layered Delicate Gold Necklace</div>
+        <div class="product-price">₹2,499</div>
+        <div class="product-desc">18K gold-plated, anti-tarnish coating. Adjustable 16-18 inch chain</div>
+        <div class="product-rating">★★★★★ (412 reviews)</div>
+      </div>
+    </a>
+    <a class="product-card" href="#jhumka-earrings">
+      <div class="product-img">
+        <img src="https://images.unsplash.com/photo-1630019852942-f89202989a59?w=500" alt="Jhumka Earrings">
+        <span class="product-badge badge-hot">Hot</span>
+      </div>
+      <div class="product-info">
+        <div class="product-brand">Rang Manch</div>
+        <div class="product-name">Oxidised Silver Jhumka Earrings</div>
+        <div class="product-price">₹799</div>
+        <div class="product-desc">Handcrafted, stone-studded. Colors: Silver-Green, Silver-Blue, Silver-Red</div>
+        <div class="product-rating">★★★★★ (1,567 reviews)</div>
+      </div>
+    </a>
+    <a class="product-card" href="#pearl-bracelet">
+      <div class="product-img">
+        <img src="https://images.unsplash.com/photo-1573408301185-9519f94815f4?w=500" alt="Pearl Bracelet">
+      </div>
+      <div class="product-info">
+        <div class="product-brand">GoldBloom</div>
+        <div class="product-name">Freshwater Pearl Bracelet</div>
+        <div class="product-price">₹3,299</div>
+        <div class="product-desc">Genuine freshwater pearls, sterling silver clasp. Sizes: Standard, Small</div>
+        <div class="product-rating">★★★★★ (234 reviews)</div>
+      </div>
+    </a>
+    <a class="product-card" href="#kundan-set">
+      <div class="product-img">
+        <img src="https://images.unsplash.com/photo-1602173574767-37ac01994b2a?w=500" alt="Kundan Set">
+        <span class="product-badge badge-sale">20% Off</span>
+      </div>
+      <div class="product-info">
+        <div class="product-brand">Rang Manch</div>
+        <div class="product-name">Kundan Bridal Jewellery Set</div>
+        <div class="product-price"><span class="old">₹4,999</span>₹3,999</div>
+        <div class="product-desc">Necklace + earrings + maang tikka. Colors: Gold-Red, Gold-Green, Gold-Blue</div>
+        <div class="product-rating">★★★★★ (547 reviews)</div>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- WATCHES -->
+<section class="section">
+  <div class="section-tag">Timepieces</div>
+  <div class="section-title">Watches</div>
+  <div class="section-sub">From minimalist dials to luxury chronographs — time it perfectly</div>
+  <div class="products-grid">
+    <a class="product-card" href="#ladies-watch">
+      <div class="product-img">
+        <img src="https://images.unsplash.com/photo-1524592094714-0f0654e20314?w=500" alt="Ladies Watch">
+        <span class="product-badge badge-new">New</span>
+      </div>
+      <div class="product-info">
+        <div class="product-brand">Timex</div>
+        <div class="product-name">Rose Gold Minimalist Ladies Watch</div>
+        <div class="product-price">₹4,499</div>
+        <div class="product-desc">Sapphire glass, Japanese quartz movement, leather strap. Water resistant 30m</div>
+        <div class="product-rating">★★★★★ (312 reviews)</div>
+      </div>
+    </a>
+    <a class="product-card" href="#mens-watch">
+      <div class="product-img">
+        <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=500" alt="Men's Watch">
+        <span class="product-badge badge-hot">Best Seller</span>
+      </div>
+      <div class="product-info">
+        <div class="product-brand">Fastrack</div>
+        <div class="product-name">Chronograph Sports Watch</div>
+        <div class="product-price">₹3,299</div>
+        <div class="product-desc">3 sub-dials, stainless steel, 100m water resistant. Colors: Black, Silver, Blue</div>
+        <div class="product-rating">★★★★☆ (891 reviews)</div>
+      </div>
+    </a>
+    <a class="product-card" href="#smart-watch">
+      <div class="product-img">
+        <img src="https://images.unsplash.com/photo-1579586337278-3befd40fd17a?w=500" alt="Smart Watch">
+        <span class="product-badge badge-sale">15% Off</span>
+      </div>
+      <div class="product-info">
+        <div class="product-brand">StyleNest Tech</div>
+        <div class="product-name">Health & Fitness Smartwatch</div>
+        <div class="product-price"><span class="old">₹7,999</span>₹6,799</div>
+        <div class="product-desc">Heart rate, SpO2, GPS, 7-day battery. Compatible iOS & Android</div>
+        <div class="product-rating">★★★★☆ (1,243 reviews)</div>
+      </div>
+    </a>
+    <a class="product-card" href="#couple-watch">
+      <div class="product-img">
+        <img src="https://images.unsplash.com/photo-1434056886845-dac89ffe9b56?w=500" alt="Couple Watch Set">
+      </div>
+      <div class="product-info">
+        <div class="product-brand">Timex</div>
+        <div class="product-name">Couple Watch Gift Set</div>
+        <div class="product-price">₹7,499</div>
+        <div class="product-desc">Set of 2 matching watches (His & Hers). Gift box included. Anniversary special</div>
+        <div class="product-rating">★★★★★ (198 reviews)</div>
+      </div>
+    </a>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">Style<span>Nest</span></div>
+  <p>📞 1800-103-7799 &nbsp;|&nbsp; ✉️ hello@stylenest.in</p>
+</footer>
+
+<script src="http://localhost:8000/widget/chatbot.js" data-client-id="9893a465-1be3-4685-9482-d9b995ce9ce0" data-api-key="aa34d49f-5353-42ad-9f9a-73b7b7a8e98b" defer></script>
+</body>
+</html>

@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>StyleNest — Premium Fashion & Clothing</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #0D0D0D;
+    --white: #FAFAF8;
+    --blush: #E8C5B0;
+    --rose: #C0616A;
+    --sage: #7D9B76;
+    --warm: #F5EFE6;
+    --mid: #8A8070;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Jost', sans-serif; background: var(--white); color: var(--black); }
+
+  nav {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 18px 64px; background: var(--black); position: sticky; top: 0; z-index: 200;
+  }
+  .logo { font-family: 'Cormorant Garamond', serif; font-size: 26px; color: var(--white); letter-spacing: 3px; font-weight: 600; }
+  .logo span { color: var(--blush); }
+  nav ul { display: flex; gap: 36px; list-style: none; }
+  nav ul a { color: #bbb; text-decoration: none; font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase; transition: color 0.2s; font-weight: 400; }
+  nav ul a:hover { color: var(--blush); }
+  .nav-actions { display: flex; gap: 20px; align-items: center; }
+  .nav-actions a { color: #bbb; text-decoration: none; font-size: 13px; letter-spacing: 1px; text-transform: uppercase; }
+  .nav-actions a:hover { color: var(--blush); }
+
+  /* HERO */
+  .hero {
+    display: grid; grid-template-columns: 1fr 1fr; min-height: 92vh;
+    background: var(--black);
+  }
+  .hero-text {
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 80px 64px; gap: 28px;
+  }
+  .hero-tag { color: var(--blush); font-size: 12px; letter-spacing: 4px; text-transform: uppercase; font-weight: 500; }
+  .hero h1 { font-family: 'Cormorant Garamond', serif; font-size: 72px; color: var(--white); line-height: 1.05; font-weight: 300; }
+  .hero h1 em { font-style: italic; color: var(--blush); }
+  .hero p { color: #999; font-size: 16px; line-height: 1.8; max-width: 400px; font-weight: 300; }
+  .hero-btns { display: flex; gap: 16px; margin-top: 8px; flex-wrap: wrap; }
+  .btn-primary {
+    padding: 15px 36px; background: var(--rose); color: white;
+    border: none; font-family: 'Jost', sans-serif; font-size: 13px;
+    cursor: pointer; letter-spacing: 2px; text-transform: uppercase;
+    text-decoration: none; transition: background 0.2s; font-weight: 500;
+  }
+  .btn-primary:hover { background: #a84e56; }
+  .btn-outline {
+    padding: 15px 36px; background: transparent; color: var(--white);
+    border: 1px solid #444; font-family: 'Jost', sans-serif; font-size: 13px;
+    cursor: pointer; letter-spacing: 2px; text-transform: uppercase;
+    text-decoration: none; transition: all 0.2s; font-weight: 400;
+  }
+  .btn-outline:hover { border-color: var(--blush); color: var(--blush); }
+  .hero-image {
+    background: url('https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=900') center/cover;
+    position: relative;
+  }
+  .hero-badge {
+    position: absolute; bottom: 40px; left: -60px;
+    background: var(--blush); padding: 20px 28px; width: 200px;
+  }
+  .hero-badge strong { display: block; font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 700; }
+  .hero-badge span { font-size: 12px; text-transform: uppercase; letter-spacing: 1px; color: #555; }
+
+  /* STATS */
+  .stats {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    background: var(--rose); padding: 44px 64px; text-align: center;
+  }
+  .stat-num { font-family: 'Cormorant Garamond', serif; font-size: 48px; color: white; font-weight: 600; }
+  .stat-label { color: rgba(255,255,255,0.85); font-size: 12px; letter-spacing: 2px; text-transform: uppercase; margin-top: 4px; }
+
+  /* SECTION */
+  .section { padding: 80px 64px; }
+  .section.dark { background: var(--black); }
+  .section.warm { background: var(--warm); }
+  .section-tag { color: var(--rose); font-size: 11px; letter-spacing: 4px; text-transform: uppercase; margin-bottom: 12px; }
+  .section-title { font-family: 'Cormorant Garamond', serif; font-size: 48px; margin-bottom: 8px; font-weight: 400; }
+  .section.dark .section-title { color: var(--white); }
+  .section-sub { color: var(--mid); font-size: 15px; margin-bottom: 52px; font-weight: 300; }
+  .section.dark .section-sub { color: #666; }
+
+  /* CATEGORIES */
+  .categories { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
+  .cat-card {
+    position: relative; height: 420px; overflow: hidden; cursor: pointer;
+    text-decoration: none; display: block;
+  }
+  .cat-card img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
+  .cat-card:hover img { transform: scale(1.06); }
+  .cat-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.75) 0%, transparent 50%);
+    padding: 32px; display: flex; flex-direction: column; justify-content: flex-end;
+  }
+  .cat-overlay h3 { font-family: 'Cormorant Garamond', serif; font-size: 28px; color: white; font-weight: 400; }
+  .cat-overlay p { font-size: 13px; color: #ccc; margin-top: 6px; letter-spacing: 0.5px; }
+  .cat-overlay .cat-cta {
+    display: inline-block; margin-top: 14px; padding: 10px 24px;
+    background: var(--blush); color: var(--black); font-size: 12px;
+    letter-spacing: 2px; text-transform: uppercase; font-weight: 500;
+    text-decoration: none; width: fit-content;
+  }
+
+  /* FEATURED PRODUCTS */
+  .products-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; }
+  .product-card { cursor: pointer; text-decoration: none; color: inherit; }
+  .product-img {
+    position: relative; height: 340px; overflow: hidden; background: #f0ebe4;
+  }
+  .product-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s; }
+  .product-card:hover .product-img img { transform: scale(1.04); }
+  .product-badge {
+    position: absolute; top: 14px; left: 14px;
+    background: var(--rose); color: white; padding: 4px 10px;
+    font-size: 11px; letter-spacing: 1px; text-transform: uppercase;
+  }
+  .product-info { padding: 16px 4px; }
+  .product-brand { font-size: 11px; color: var(--mid); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 4px; }
+  .product-name { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 400; margin-bottom: 8px; }
+  .product-price { font-size: 15px; font-weight: 500; color: var(--rose); }
+  .product-price .old { text-decoration: line-through; color: #bbb; font-weight: 300; margin-right: 8px; font-size: 13px; }
+  .product-sizes { font-size: 12px; color: var(--mid); margin-top: 6px; }
+
+  /* BANNER */
+  .banner {
+    display: grid; grid-template-columns: 1fr 1fr; min-height: 500px;
+  }
+  .banner-img { background: url('https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800') center/cover; }
+  .banner-text {
+    background: var(--black); display: flex; flex-direction: column;
+    justify-content: center; padding: 80px 64px; gap: 24px;
+  }
+  .banner-text .section-tag { margin-bottom: 0; }
+  .banner-text h2 { font-family: 'Cormorant Garamond', serif; font-size: 52px; color: var(--white); font-weight: 300; line-height: 1.1; }
+  .banner-text p { color: #888; font-size: 15px; line-height: 1.7; max-width: 380px; }
+
+  /* TESTIMONIALS */
+  .testimonials { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
+  .testi { padding: 36px; background: white; border-top: 3px solid var(--blush); }
+  .testi-stars { color: var(--rose); font-size: 16px; margin-bottom: 16px; }
+  .testi-text { font-family: 'Cormorant Garamond', serif; font-size: 18px; line-height: 1.6; font-style: italic; margin-bottom: 20px; color: #333; }
+  .testi-name { font-size: 13px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; }
+  .testi-location { font-size: 12px; color: var(--mid); }
+
+  /* FOOTER */
+  footer {
+    background: var(--black); padding: 60px 64px 32px;
+    display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px;
+  }
+  .footer-brand .logo { font-size: 22px; display: block; margin-bottom: 16px; }
+  .footer-brand p { color: #666; font-size: 14px; line-height: 1.7; max-width: 260px; }
+  .footer-col h5 { color: var(--blush); font-size: 11px; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 20px; font-weight: 500; }
+  .footer-col ul { list-style: none; }
+  .footer-col ul li { margin-bottom: 10px; }
+  .footer-col ul a { color: #666; text-decoration: none; font-size: 14px; transition: color 0.2s; }
+  .footer-col ul a:hover { color: var(--blush); }
+  .footer-bottom { border-top: 1px solid #1f1f1f; padding: 24px 64px; display: flex; justify-content: space-between; background: var(--black); }
+  .footer-bottom p { color: #444; font-size: 13px; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">Style<span>Nest</span></div>
+  <ul>
+    <li><a href="index.html">Home</a></li>
+    <li><a href="women.html">Women</a></li>
+    <li><a href="men.html">Men</a></li>
+    <li><a href="accessories.html">Accessories</a></li>
+    <li><a href="sale.html">Sale</a></li>
+    <li><a href="about.html">About</a></li>
+  </ul>
+  <div class="nav-actions">
+    <a href="#">Search</a>
+    <a href="#">Wishlist</a>
+    <a href="#">Cart (0)</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-text">
+    <span class="hero-tag">New Arrivals — SS 2026</span>
+    <h1>Dress With <em>Purpose</em> & Style</h1>
+    <p>Curated fashion for the modern woman and man. Premium fabrics, timeless designs, and sustainable practices — all at honest prices.</p>
+    <div class="hero-btns">
+      <a href="women.html" class="btn-primary">Shop Women</a>
+      <a href="men.html" class="btn-outline">Shop Men</a>
+    </div>
+  </div>
+  <div class="hero-image">
+    <div class="hero-badge">
+      <strong>40% OFF</strong>
+      <span>Sale Now Live</span>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="stats">
+  <div><div class="stat-num">5000+</div><div class="stat-label">Styles Available</div></div>
+  <div><div class="stat-num">120+</div><div class="stat-label">Premium Brands</div></div>
+  <div><div class="stat-num">98%</div><div class="stat-label">Customer Satisfaction</div></div>
+  <div><div class="stat-num">Free</div><div class="stat-label">Delivery Above ₹999</div></div>
+</section>
+
+<!-- CATEGORIES -->
+<section class="section">
+  <div class="section-tag">Browse</div>
+  <div class="section-title">Shop by Category</div>
+  <div class="section-sub">From everyday essentials to statement pieces — find your style</div>
+  <div class="categories">
+    <a class="cat-card" href="women.html">
+      <img src="https://images.unsplash.com/photo-1469334031218-e382a71b716b?w=700" alt="Women's Fashion">
+      <div class="cat-overlay">
+        <h3>Women's Fashion</h3>
+        <p>Dresses, Tops, Sarees, Kurtis & more</p>
+        <span class="cat-cta">Shop Now</span>
+      </div>
+    </a>
+    <a class="cat-card" href="men.html">
+      <img src="https://images.unsplash.com/photo-1617137968427-85924c800a22?w=700" alt="Men's Fashion">
+      <div class="cat-overlay">
+        <h3>Men's Fashion</h3>
+        <p>Shirts, Trousers, Ethnic & more</p>
+        <span class="cat-cta">Shop Now</span>
+      </div>
+    </a>
+    <a class="cat-card" href="accessories.html">
+      <img src="https://images.unsplash.com/photo-1611085583191-a3b181a88401?w=700" alt="Accessories">
+      <div class="cat-overlay">
+        <h3>Accessories</h3>
+        <p>Bags, Jewellery, Watches & more</p>
+        <span class="cat-cta">Shop Now</span>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- FEATURED PRODUCTS -->
+<section class="section warm">
+  <div class="section-tag">Trending Now</div>
+  <div class="section-title">Best Sellers This Week</div>
+  <div class="section-sub">Our most loved styles — trusted by thousands of happy customers</div>
+  <div class="products-grid">
+    <a class="product-card" href="women.html#silk-dress">
+      <div class="product-img">
+        <img src="https://images.unsplash.com/photo-1496747611176-843222e1e57c?w=500" alt="Silk Wrap Dress">
+        <span class="product-badge">Best Seller</span>
+      </div>
+      <div class="product-info">
+        <div class="product-brand">StyleNest Originals</div>
+        <div class="product-name">Silk Wrap Midi Dress</div>
+        <div class="product-price"><span class="old">₹4,999</span>₹2,999</div>
+        <div class="product-sizes">Sizes: XS, S, M, L, XL</div>
+      </div>
+    </a>
+    <a class="product-card" href="men.html#linen-shirt">
+      <div class="product-img">
+        <img src="https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=500" alt="Linen Shirt">
+        <span class="product-badge">New</span>
+      </div>
+      <div class="product-info">
+        <div class="product-brand">Urban Thread</div>
+        <div class="product-name">Premium Linen Shirt</div>
+        <div class="product-price">₹1,799</div>
+        <div class="product-sizes">Sizes: S, M, L, XL, XXL</div>
+      </div>
+    </a>
+    <a class="product-card" href="women.html#floral-kurti">
+      <div class="product-img">
+        <img src="https://images.unsplash.com/photo-1583391733956-6c78276477e2?w=500" alt="Floral Kurti">
+      </div>
+      <div class="product-info">
+        <div class="product-brand">Rang Manch</div>
+        <div class="product-name">Printed Floral Kurti</div>
+        <div class="product-price"><span class="old">₹1,299</span>₹799</div>
+        <div class="product-sizes">Sizes: S, M, L, XL, XXL, 3XL</div>
+      </div>
+    </a>
+    <a class="product-card" href="accessories.html#tote-bag">
+      <div class="product-img">
+        <img src="https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=500" alt="Leather Tote">
+        <span class="product-badge">40% Off</span>
+      </div>
+      <div class="product-info">
+        <div class="product-brand">LuxeCarry</div>
+        <div class="product-name">Genuine Leather Tote Bag</div>
+        <div class="product-price"><span class="old">₹5,499</span>₹3,299</div>
+        <div class="product-sizes">Colors: Tan, Black, Burgundy</div>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- BANNER -->
+<section class="banner">
+  <div class="banner-img"></div>
+  <div class="banner-text">
+    <span class="section-tag">Exclusive Offer</span>
+    <h2>End of Season Sale — Up to 40% Off</h2>
+    <p>Limited time. Limited stock. Shop our biggest sale of the year across all categories including premium brands, ethnic wear, western formals, and accessories.</p>
+    <div style="margin-top: 16px;">
+      <a href="sale.html" class="btn-primary">Shop the Sale</a>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="section warm">
+  <div class="section-tag">What They Say</div>
+  <div class="section-title">Loved by Our Customers</div>
+  <div class="section-sub">Real reviews from real StyleNest shoppers</div>
+  <div class="testimonials">
+    <div class="testi">
+      <div class="testi-stars">★★★★★</div>
+      <div class="testi-text">"The Silk Wrap Dress exceeded my expectations. The fabric quality is incredible and the fit is perfect. Got so many compliments!"</div>
+      <div class="testi-name">Priya Sharma</div>
+      <div class="testi-location">Mumbai, Maharashtra</div>
+    </div>
+    <div class="testi">
+      <div class="testi-stars">★★★★★</div>
+      <div class="testi-text">"StyleNest's linen shirts are the best I've found online. Breathable, well-stitched, and the sizing chart is accurate. Will order again!"</div>
+      <div class="testi-name">Arjun Mehta</div>
+      <div class="testi-location">Bangalore, Karnataka</div>
+    </div>
+    <div class="testi">
+      <div class="testi-stars">★★★★☆</div>
+      <div class="testi-text">"Great variety in accessories. The leather tote bag I bought is genuine leather and very spacious. Delivery was fast — 2 days!"</div>
+      <div class="testi-name">Sneha Joshi</div>
+      <div class="testi-location">Pune, Maharashtra</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">
+    <span class="logo">Style<span>Nest</span></span>
+    <p>Premium fashion for every occasion. Delivering quality, style, and confidence across India since 2015.</p>
+  </div>
+  <div class="footer-col">
+    <h5>Women</h5>
+    <ul>
+      <li><a href="women.html">Dresses</a></li>
+      <li><a href="women.html">Tops & Blouses</a></li>
+      <li><a href="women.html">Sarees</a></li>
+      <li><a href="women.html">Kurtis</a></li>
+      <li><a href="women.html">Jeans & Pants</a></li>
+    </ul>
+  </div>
+  <div class="footer-col">
+    <h5>Men</h5>
+    <ul>
+      <li><a href="men.html">Shirts</a></li>
+      <li><a href="men.html">T-Shirts</a></li>
+      <li><a href="men.html">Trousers</a></li>
+      <li><a href="men.html">Ethnic Wear</a></li>
+      <li><a href="men.html">Jackets</a></li>
+    </ul>
+  </div>
+  <div class="footer-col">
+    <h5>Help</h5>
+    <ul>
+      <li><a href="about.html">About Us</a></li>
+      <li><a href="about.html#contact">Contact</a></li>
+      <li><a href="about.html#shipping">Shipping Policy</a></li>
+      <li><a href="about.html#returns">Return Policy</a></li>
+      <li><a href="about.html#faq">FAQ</a></li>
+    </ul>
+  </div>
+</footer>
+<div class="footer-bottom">
+  <p>© 2026 StyleNest. All rights reserved.</p>
+  <p>📞 1800-103-7799 &nbsp;|&nbsp; ✉️ hello@stylenest.in</p>
+</div>
+
+<!-- CHATBOT WIDGET — replace credentials with your StyleNest client credentials -->
+<!-- <script
+  src="http://localhost:8000/widget/chatbot.js"
+  data-client-id="STYLENEST_CLIENT_ID"
+  data-api-key="STYLENEST_API_KEY"
+  defer>
+</script> -->
+
+<script src="http://localhost:8000/widget/chatbot.js" data-client-id="9893a465-1be3-4685-9482-d9b995ce9ce0" data-api-key="aa34d49f-5353-42ad-9f9a-73b7b7a8e98b" defer></script>
+</body>
+</html>
