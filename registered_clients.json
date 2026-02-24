@@ -1,0 +1,12 @@
+[
+  {
+    "registered_at": "2026-02-24T15:02:12.236165",
+    "id": "9893a465-1be3-4685-9482-d9b995ce9ce0",
+    "name": "fashion",
+    "website_url": "http://localhost:3001",
+    "api_key": "aa34d49f-5353-42ad-9f9a-73b7b7a8e98b",
+    "bot_name": "FashionBot",
+    "plan": "growth",
+    "ai_provider": "groq"
+  }
+]

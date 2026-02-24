@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ChatBot SaaS — CrewAI Edition v2.0</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0f; --surface: #111118; --border: #1e1e2e;
+    --accent: #ff3f6c; --a2: #6366f1; --a3: #0ea5e9; --a4: #22c55e; --a5: #f59e0b;
+    --text: #e2e2f0; --muted: #6b6b8a; --code: #0d0d1a;
+    --mono: 'JetBrains Mono', monospace; --sans: 'Syne', sans-serif;
+  }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:var(--bg); color:var(--text); font-family:var(--sans); line-height:1.7; }
+  body::before { content:''; position:fixed; inset:0; background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E"); pointer-events:none; z-index:0; opacity:.4; }
+  .wrap { max-width:980px; margin:0 auto; padding:60px 32px; position:relative; z-index:1; }
+
+  /* Hero */
+  .hero { border:1px solid var(--border); background:linear-gradient(135deg,#111118,#0d0d1a); padding:52px 48px; margin-bottom:48px; position:relative; overflow:hidden; }
+  .hero::before { content:''; position:absolute; top:-60px; right:-60px; width:300px; height:300px; background:radial-gradient(circle,rgba(255,63,108,.12),transparent 70%); pointer-events:none; }
+  .hero::after { content:''; position:absolute; bottom:-80px; left:-40px; width:250px; height:250px; background:radial-gradient(circle,rgba(99,102,241,.08),transparent 70%); pointer-events:none; }
+  .vtag { display:inline-flex; align-items:center; gap:8px; background:rgba(255,63,108,.1); border:1px solid rgba(255,63,108,.25); color:var(--accent); font-family:var(--mono); font-size:11px; font-weight:600; letter-spacing:1.5px; padding:5px 12px; text-transform:uppercase; margin-bottom:20px; }
+  .vtag .dot { width:6px; height:6px; border-radius:50%; background:var(--accent); animation:pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1}50%{opacity:.3} }
+  h1 { font-size:42px; font-weight:800; line-height:1.1; margin-bottom:14px; letter-spacing:-1px; }
+  h1 span { color:var(--accent); }
+  .hero-sub { color:var(--muted); font-size:16px; max-width:580px; margin-bottom:32px; }
+  .badge-row { display:flex; flex-wrap:wrap; gap:10px; }
+  .badge { display:inline-flex; align-items:center; gap:6px; padding:6px 14px; border:1px solid var(--border); font-family:var(--mono); font-size:11px; color:var(--muted); background:var(--surface); }
+  .bdot { width:7px; height:7px; border-radius:50%; }
+
+  /* Sections */
+  .sec { margin-bottom:52px; }
+  .sec-label { font-family:var(--mono); font-size:10px; font-weight:700; letter-spacing:3px; text-transform:uppercase; color:var(--accent); margin-bottom:20px; display:flex; align-items:center; gap:12px; }
+  .sec-label::after { content:''; flex:1; height:1px; background:var(--border); }
+  h2 { font-size:22px; font-weight:700; margin-bottom:20px; letter-spacing:-.3px; }
+
+  /* Tree */
+  .tree { background:var(--code); border:1px solid var(--border); padding:28px 32px; font-family:var(--mono); font-size:12.5px; line-height:2.1; overflow-x:auto; }
+  .tr { color:var(--accent); font-weight:700; font-size:14px; }
+  .td { color:var(--a3); font-weight:600; }
+  .tf { color:#a0a0c0; }
+  .tn { color:var(--a4); }
+  .tc { color:#333; user-select:none; }
+  .tm { color:var(--muted); font-size:11px; }
+  .tb { display:inline-block; font-size:9px; padding:1px 6px; margin-left:8px; font-weight:700; letter-spacing:.5px; vertical-align:middle; }
+  .tb-new { background:rgba(34,197,94,.15); color:var(--a4); border:1px solid rgba(34,197,94,.2); }
+  .tb-upd { background:rgba(245,158,11,.1); color:var(--a5); border:1px solid rgba(245,158,11,.2); }
+  .tb-fix { background:rgba(255,63,108,.1); color:var(--accent); border:1px solid rgba(255,63,108,.2); }
+  .tb-ok  { background:rgba(107,107,138,.1); color:var(--muted); border:1px solid var(--border); }
+
+  /* Model chain */
+  .chain { display:flex; align-items:stretch; gap:0; }
+  .chain-item { flex:1; border:1px solid var(--border); padding:20px; background:var(--surface); position:relative; }
+  .chain-item+.chain-item { border-left:none; }
+  .chain-item::before { content:''; position:absolute; top:0; left:0; right:0; height:3px; background:var(--ci-col, var(--accent)); }
+  .chain-arrow { display:flex; align-items:center; padding:0 2px; color:var(--muted); font-size:18px; }
+  .ci-label { font-family:var(--mono); font-size:9px; font-weight:700; letter-spacing:2px; text-transform:uppercase; color:var(--muted); margin-bottom:8px; }
+  .ci-model { font-family:var(--mono); font-size:12px; font-weight:600; margin-bottom:4px; }
+  .ci-limit { font-size:13px; font-weight:700; margin-bottom:4px; }
+  .ci-desc { font-size:12px; color:var(--muted); }
+
+  /* Agents grid */
+  .agents { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  .agent { background:var(--surface); border:1px solid var(--border); padding:24px; position:relative; overflow:hidden; transition:border-color .2s; }
+  .agent:hover { border-color:var(--ac,var(--accent)); }
+  .agent::before { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:var(--ac,var(--accent)); }
+  .ag-num { font-family:var(--mono); font-size:10px; color:var(--muted); margin-bottom:10px; letter-spacing:1px; }
+  .ag-name { font-size:16px; font-weight:700; margin-bottom:6px; }
+  .ag-trigger { font-family:var(--mono); font-size:11px; color:var(--muted); margin-bottom:10px; }
+  .ag-desc { font-size:13px; color:var(--muted); line-height:1.6; }
+
+  /* Memory */
+  .mem { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  .mem-card { background:var(--surface); border:1px solid var(--border); padding:24px; }
+  .mem-icon { font-size:28px; margin-bottom:12px; }
+  .mem-name { font-size:16px; font-weight:700; margin-bottom:6px; }
+  .mem-type { font-family:var(--mono); font-size:11px; color:var(--muted); margin-bottom:10px; }
+  .mem-desc { font-size:13px; color:var(--muted); line-height:1.6; }
+  .mem-path { display:inline-block; margin-top:12px; font-family:var(--mono); font-size:11px; background:var(--code); border:1px solid var(--border); padding:4px 10px; color:var(--a3); }
+
+  /* Steps */
+  .steps { display:flex; flex-direction:column; }
+  .step { display:grid; grid-template-columns:56px 1fr; border:1px solid var(--border); border-bottom:none; background:var(--surface); }
+  .step:last-child { border-bottom:1px solid var(--border); }
+  .step-n { display:flex; align-items:flex-start; justify-content:center; padding-top:20px; font-family:var(--mono); font-size:11px; font-weight:700; color:var(--accent); border-right:1px solid var(--border); }
+  .step-b { padding:18px 24px; }
+  .step-t { font-size:14px; font-weight:700; margin-bottom:8px; }
+  .step-d { font-size:13px; color:var(--muted); line-height:1.6; margin-bottom:10px; }
+  pre { background:var(--code); border:1px solid var(--border); padding:12px 16px; font-family:var(--mono); font-size:12px; color:var(--a4); overflow-x:auto; white-space:pre; margin-bottom:6px; }
+  code { font-family:var(--mono); font-size:12px; background:var(--code); border:1px solid var(--border); padding:2px 7px; color:var(--a3); }
+
+  /* Fixes table */
+  .fixes { width:100%; border-collapse:collapse; }
+  .fixes th { text-align:left; font-family:var(--mono); font-size:10px; letter-spacing:2px; text-transform:uppercase; color:var(--muted); padding:10px 14px; border-bottom:1px solid var(--border); }
+  .fixes td { padding:12px 14px; border-bottom:1px solid var(--border); font-size:13px; vertical-align:top; }
+  .fixes tr:last-child td { border-bottom:none; }
+  .fixes tr:hover td { background:var(--surface); }
+  .fix-tag { display:inline-block; font-family:var(--mono); font-size:9px; font-weight:700; padding:2px 7px; border-radius:2px; }
+  .ft-chat { background:rgba(14,165,233,.1); color:var(--a3); border:1px solid rgba(14,165,233,.2); }
+  .ft-widget { background:rgba(99,102,241,.1); color:var(--a2); border:1px solid rgba(99,102,241,.2); }
+
+  /* API table */
+  .api { width:100%; border-collapse:collapse; }
+  .api th { text-align:left; font-family:var(--mono); font-size:10px; letter-spacing:2px; text-transform:uppercase; color:var(--muted); padding:10px 14px; border-bottom:1px solid var(--border); }
+  .api td { padding:12px 14px; border-bottom:1px solid var(--border); font-size:13px; vertical-align:top; }
+  .api tr:last-child td { border-bottom:none; }
+  .api tr:hover td { background:var(--surface); }
+  .method { font-family:var(--mono); font-size:10px; font-weight:700; padding:3px 7px; border-radius:2px; }
+  .m-get  { background:rgba(34,197,94,.1);  color:var(--a4); border:1px solid rgba(34,197,94,.2); }
+  .m-post { background:rgba(14,165,233,.1); color:var(--a3); border:1px solid rgba(14,165,233,.2); }
+  .m-del  { background:rgba(255,63,108,.1); color:var(--accent); border:1px solid rgba(255,63,108,.2); }
+  .ep { font-family:var(--mono); font-size:12px; color:#c0c0e0; }
+  .new { display:inline-block; font-family:var(--mono); font-size:9px; font-weight:700; padding:1px 6px; background:rgba(34,197,94,.1); color:var(--a4); border:1px solid rgba(34,197,94,.2); margin-left:6px; vertical-align:middle; }
+
+  /* Flow */
+  .flow { background:var(--surface); border:1px solid var(--border); padding:32px; display:flex; flex-direction:column; align-items:center; gap:0; }
+  .fn { background:var(--code); border:1px solid var(--border); padding:10px 24px; font-family:var(--mono); font-size:12px; text-align:center; min-width:240px; }
+  .fn.acc { border-color:var(--accent); color:var(--accent); }
+  .fn.blue { border-color:var(--a3); color:var(--a3); }
+  .fn.green { border-color:var(--a4); color:var(--a4); }
+  .fn.amber { border-color:var(--a5); color:var(--a5); }
+  .fa { font-size:18px; color:var(--muted); line-height:1; padding:4px 0; }
+  .fsplit { display:flex; gap:10px; align-items:stretch; }
+  .fsplit .fn { min-width:140px; font-size:11px; }
+  .fsplit .fn:nth-child(1) { border-color:var(--a2); color:var(--a2); }
+  .fsplit .fn:nth-child(2) { border-color:var(--accent); color:var(--accent); }
+  .fsplit .fn:nth-child(3) { border-color:var(--a3); color:var(--a3); }
+  .fsplit .fn:nth-child(4) { border-color:var(--a4); color:var(--a4); }
+
+  /* Troubleshooting */
+  .trouble { display:flex; flex-direction:column; gap:12px; }
+  .titem { background:var(--surface); border:1px solid var(--border); border-left:3px solid var(--accent); padding:18px 20px; }
+  .t-q { font-size:14px; font-weight:700; margin-bottom:8px; font-family:var(--mono); color:var(--accent); }
+  .t-a { font-size:13px; color:var(--muted); line-height:1.6; }
+
+  /* Footer */
+  .footer { margin-top:60px; padding-top:24px; border-top:1px solid var(--border); display:flex; align-items:center; justify-content:space-between; font-family:var(--mono); font-size:11px; color:var(--muted); }
+
+  @media(max-width:640px) {
+    .agents,.mem,.chain { grid-template-columns:1fr; flex-direction:column; }
+    h1 { font-size:28px; } .hero { padding:32px 24px; }
+    .fsplit { flex-wrap:wrap; justify-content:center; }
+    .chain-arrow { display:none; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- Hero -->
+  <div class="hero">
+    <div class="vtag"><span class="dot"></span> ChatBot SaaS — CrewAI Edition v2.0</div>
+    <h1>Multi-Agent AI <span>Chatbot</span><br>Project Guide</h1>
+    <p class="hero-sub">Generic multi-tenant SaaS chatbot. 4 specialist agents, 3-model Groq chain, persistent dual memory. Plug into any website — zero code changes per client.</p>
+    <div class="badge-row">
+      <div class="badge"><span class="bdot" style="background:#6366f1"></span> RAG Search</div>
+      <div class="badge"><span class="bdot" style="background:#ff3f6c"></span> Sales Agent</div>
+      <div class="badge"><span class="bdot" style="background:#0ea5e9"></span> Comparison</div>
+      <div class="badge"><span class="bdot" style="background:#22c55e"></span> Support</div>
+      <div class="badge"><span class="bdot" style="background:#f59e0b"></span> 3-Model Chain</div>
+      <div class="badge"><span class="bdot" style="background:#e879f9"></span> Dual Memory</div>
+    </div>
+  </div>
+
+  <!-- Structure -->
+  <div class="sec">
+    <div class="sec-label">01 &nbsp; Project Structure</div>
+    <h2>Where to Place Each File</h2>
+    <div class="tree">
+<span class="tr">YourProject\</span>
+<span class="tc">│</span>
+<span class="tc">├── </span><span class="td">ai\</span><span class="tb tb-new">NEW</span><span class="tm">   ← model chain manager</span>
+<span class="tc">│   ├── </span><span class="tn">__init__.py</span><span class="tb tb-new">NEW</span><span class="tm">   ← REQUIRED — empty file, makes ai\ a Python package</span>
+<span class="tc">│   └── </span><span class="tn">groq_router.py</span><span class="tb tb-new">NEW</span><span class="tm">   ← auto-switches: Primary → F1 → F2 → Ollama</span>
+<span class="tc">│</span>
+<span class="tc">├── </span><span class="td">agents\</span><span class="tb tb-new">NEW</span><span class="tm">   ← specialist AI agents</span>
+<span class="tc">│   ├── </span><span class="tn">__init__.py</span>
+<span class="tc">│   ├── </span><span class="tn">agents.py</span><span class="tb tb-new">NEW</span><span class="tm">   ← 4 agents all using groq_router</span>
+<span class="tc">│   └── </span><span class="tn">orchestrator.py</span><span class="tb tb-new">NEW</span><span class="tm">   ← keyword + LLM intent detection</span>
+<span class="tc">│</span>
+<span class="tc">├── </span><span class="td">api\</span>
+<span class="tc">│   ├── </span><span class="tf">__init__.py</span>
+<span class="tc">│   ├── </span><span class="tf">main.py</span><span class="tb tb-upd">UPDATED</span><span class="tm">   ← sys.path fix + /status endpoint + model chain logs</span>
+<span class="tc">│   ├── </span><span class="tf">chat.py</span><span class="tb tb-upd">UPDATED</span><span class="tm">   ← orchestrator, dynamic cards, URL fix, title cleaner, images</span>
+<span class="tc">│   ├── </span><span class="tf">clients.py</span><span class="tb tb-ok">SAME</span>
+<span class="tc">│   └── </span><span class="tf">webhook.py</span><span class="tb tb-ok">SAME</span>
+<span class="tc">│</span>
+<span class="tc">├── </span><span class="td">config\</span>
+<span class="tc">│   ├── </span><span class="tf">__init__.py</span>
+<span class="tc">│   ├── </span><span class="tf">settings.py</span><span class="tb tb-upd">UPDATED</span><span class="tm">   ← 3-model chain settings + daily limits</span>
+<span class="tc">│   └── </span><span class="tf">database.py</span><span class="tb tb-upd">UPDATED</span><span class="tm">   ← + chat_messages, user_memories tables</span>
+<span class="tc">│</span>
+<span class="tc">├── </span><span class="td">crawler\</span>
+<span class="tc">│   ├── </span><span class="tf">__init__.py</span>
+<span class="tc">│   ├── </span><span class="tf">scraper.py</span><span class="tb tb-ok">SAME</span>
+<span class="tc">│   └── </span><span class="tf">change_detector.py</span><span class="tb tb-ok">SAME</span>
+<span class="tc">│</span>
+<span class="tc">├── </span><span class="td">memory\</span><span class="tb tb-new">NEW</span>
+<span class="tc">│   ├── </span><span class="tn">__init__.py</span>
+<span class="tc">│   └── </span><span class="tn">memory_manager.py</span><span class="tb tb-new">NEW</span><span class="tm">   ← ChromaDB + SQLite dual memory</span>
+<span class="tc">│</span>
+<span class="tc">├── </span><span class="td">vector_db\</span>
+<span class="tc">│   ├── </span><span class="tf">__init__.py</span>
+<span class="tc">│   └── </span><span class="tf">chroma_manager.py</span><span class="tb tb-ok">SAME</span><span class="tm">   ← per-client RAG collections</span>
+<span class="tc">│</span>
+<span class="tc">├── </span><span class="td">widget\</span>
+<span class="tc">│   └── </span><span class="tf">chatbot.js</span><span class="tb tb-upd">UPDATED</span><span class="tm">   ← agent badge, dynamic cards, rotating chips, new tab links</span>
+<span class="tc">│</span>
+<span class="tc">├── </span><span class="td">test_website\</span><span class="tm">   ← TileVista demo site</span>
+<span class="tc">│   ├── </span><span class="tf">index.html</span>
+<span class="tc">│   ├── </span><span class="tf">floor-tiles.html</span>
+<span class="tc">│   ├── </span><span class="tf">wall-tiles.html</span>
+<span class="tc">│   ├── </span><span class="tf">bathroom-tiles.html</span>
+<span class="tc">│   ├── </span><span class="tf">products.html</span>
+<span class="tc">│   └── </span><span class="tf">about.html</span>
+<span class="tc">│</span>
+<span class="tc">├── </span><span class="td">chroma_storage\</span><span class="tm">   ← auto-created: RAG vectors per client</span>
+<span class="tc">├── </span><span class="td">chroma_memory\</span><span class="tm">   ← auto-created: agent conversation memory</span>
+<span class="tc">├── </span><span class="tf">chatbot_saas.db</span><span class="tm">   ← auto-created: SQLite database</span>
+<span class="tc">│</span>
+<span class="tc">├── </span><span class="tf">.env</span><span class="tm">   ← your keys (copy from .env.example, fill GROQ_API_KEY)</span>
+<span class="tc">├── </span><span class="tf">.env.example</span><span class="tb tb-upd">UPDATED</span><span class="tm">   ← documents all 3 model chain vars</span>
+<span class="tc">├── </span><span class="tf">requirements.txt</span>
+<span class="tc">├── </span><span class="tf">test_api.py</span><span class="tm">   ← register client, prints embed script</span>
+<span class="tc">├── </span><span class="tf">check_rag.py</span><span class="tm">   ← diagnose + fix RAG index</span>
+<span class="tc">└── </span><span class="tf">test_page.html</span><span class="tm">   ← serve from project root: localhost:3000/test_page.html</span>
+    </div>
+  </div>
+
+  <!-- Model Chain -->
+  <div class="sec">
+    <div class="sec-label">02 &nbsp; Model Chain</div>
+    <h2>3 Groq Models + Ollama — Bot Never Goes Down</h2>
+    <div class="chain">
+      <div class="chain-item" style="--ci-col:#6366f1">
+        <div class="ci-label">Primary</div>
+        <div class="ci-model" style="color:#6366f1">llama-3.1-8b-instant</div>
+        <div class="ci-limit" style="color:#6366f1">14,400 / day</div>
+        <div class="ci-desc">Fast. Daily workhorse. Used for most requests.</div>
+      </div>
+      <div class="chain-arrow">→</div>
+      <div class="chain-item" style="--ci-col:#ff3f6c">
+        <div class="ci-label">Fallback 1</div>
+        <div class="ci-model" style="color:#ff3f6c">llama-3.3-70b-versatile</div>
+        <div class="ci-limit" style="color:#ff3f6c">1,000 / day</div>
+        <div class="ci-desc">Better quality. Kicks in when primary rate limits.</div>
+      </div>
+      <div class="chain-arrow">→</div>
+      <div class="chain-item" style="--ci-col:#0ea5e9">
+        <div class="ci-label">Fallback 2</div>
+        <div class="ci-model" style="color:#0ea5e9">llama-4-scout-17b</div>
+        <div class="ci-limit" style="color:#0ea5e9">1,000 / day</div>
+        <div class="ci-desc">Multimodal capable. Last Groq resort.</div>
+      </div>
+      <div class="chain-arrow">→</div>
+      <div class="chain-item" style="--ci-col:#22c55e">
+        <div class="ci-label">Last Resort</div>
+        <div class="ci-model" style="color:#22c55e">Ollama (local)</div>
+        <div class="ci-limit" style="color:#22c55e">Unlimited</div>
+        <div class="ci-desc">Runs locally. Free forever. No internet needed.</div>
+      </div>
+    </div>
+    <div style="margin-top:14px; font-family:var(--mono); font-size:12px; color:var(--muted);">
+      Total free Groq quota: <span style="color:var(--a4); font-weight:700;">16,400 req/day</span> before Ollama. &nbsp;|&nbsp; All counters reset midnight UTC. &nbsp;|&nbsp; Check live: <code style="font-family:var(--mono);color:var(--a3);background:var(--code);padding:2px 7px;border:1px solid var(--border);">localhost:8000/status</code>
+    </div>
+  </div>
+
+  <!-- Flow -->
+  <div class="sec">
+    <div class="sec-label">03 &nbsp; Request Flow</div>
+    <h2>How a Message Travels</h2>
+    <div class="flow">
+      <div class="fn acc">User types in widget → POST /api/chat/{client_id}</div>
+      <div class="fa">↓</div>
+      <div class="fn blue">Validate API key → load client config</div>
+      <div class="fa">↓</div>
+      <div class="fn blue">RAG: search client's ChromaDB for top 5 relevant chunks</div>
+      <div class="fa">↓</div>
+      <div class="fn blue">Memory: load user preferences + past conversations</div>
+      <div class="fa">↓</div>
+      <div class="fn amber">Orchestrator: score keywords → detect intent (or LLM classify)</div>
+      <div class="fa">↓</div>
+      <div style="font-family:var(--mono);font-size:10px;color:var(--muted);padding:4px 0;letter-spacing:1px;">ROUTE TO SPECIALIST AGENT</div>
+      <div class="fsplit">
+        <div class="fn">RAG Search</div>
+        <div class="fn">Sales Agent</div>
+        <div class="fn">Comparison</div>
+        <div class="fn">Support</div>
+      </div>
+      <div class="fa">↓</div>
+      <div class="fn" style="border-color:var(--a5);color:var(--a5);">groq_router: try Primary → F1 → F2 → Ollama until success</div>
+      <div class="fa">↓</div>
+      <div class="fn green">Save to SQLite + ChromaDB memory</div>
+      <div class="fa">↓</div>
+      <div class="fn acc">Widget: response + agent badge + dynamic product cards + fresh chips</div>
+    </div>
+  </div>
+
+  <!-- Agents -->
+  <div class="sec">
+    <div class="sec-label">04 &nbsp; Agents</div>
+    <h2>4 Specialist Agents</h2>
+    <div class="agents">
+      <div class="agent" style="--ac:#6366f1">
+        <div class="ag-num">AGENT 01</div>
+        <div class="ag-name" style="color:#6366f1">RAG Search Agent</div>
+        <div class="ag-trigger">trigger: "show me", "find", "do you have", "available", "list"</div>
+        <div class="ag-desc">Searches the client's crawled website vector DB. Returns top 3 most relevant products or pages.</div>
+      </div>
+      <div class="agent" style="--ac:#ff3f6c">
+        <div class="ag-num">AGENT 02</div>
+        <div class="ag-name" style="color:#ff3f6c">Sales Agent</div>
+        <div class="ag-trigger">trigger: "recommend", "suggest", "best for", "help me choose", "i need"</div>
+        <div class="ag-desc">Recommends the single best product for the customer's specific need. Uses memory to personalize.</div>
+      </div>
+      <div class="agent" style="--ac:#0ea5e9">
+        <div class="ag-num">AGENT 03</div>
+        <div class="ag-name" style="color:#0ea5e9">Comparison Agent</div>
+        <div class="ag-trigger">trigger: "vs", "versus", "compare", "difference", "which is better"</div>
+        <div class="ag-desc">Creates a structured side-by-side table comparison. Ends with a clear verdict.</div>
+      </div>
+      <div class="agent" style="--ac:#22c55e">
+        <div class="ag-num">AGENT 04</div>
+        <div class="ag-name" style="color:#22c55e">Customer Support Agent</div>
+        <div class="ag-trigger">trigger: "delivery", "warranty", "return", "store", "contact", "install"</div>
+        <div class="ag-desc">Handles all non-product queries — shipping, warranties, returns, locations, contact info.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Memory -->
+  <div class="sec">
+    <div class="sec-label">05 &nbsp; Memory</div>
+    <h2>Dual Persistent Memory</h2>
+    <div class="mem">
+      <div class="mem-card">
+        <div class="mem-icon">🧠</div>
+        <div class="mem-name">ChromaDB — Semantic Memory</div>
+        <div class="mem-type">VECTOR STORE — LONG TERM</div>
+        <div class="mem-desc">Stores full conversation turns as embeddings. On each new message, finds 5 most semantically similar past conversations and provides them to the agent as context.</div>
+        <div class="mem-path">./chroma_memory/</div>
+      </div>
+      <div class="mem-card">
+        <div class="mem-icon">📋</div>
+        <div class="mem-name">SQLite — Structured Memory</div>
+        <div class="mem-type">KEY-VALUE — PERMANENT</div>
+        <div class="mem-desc">Auto-extracts structured preferences from user messages: budget, room type, style preference. Persists forever per client+user. Used to personalize Sales agent recommendations.</div>
+        <div class="mem-path">user_memories → chatbot_saas.db</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Fixes -->
+  <div class="sec">
+    <div class="sec-label">06 &nbsp; Bugs Fixed</div>
+    <h2>Issues Resolved in Latest Update</h2>
+    <table class="fixes">
+      <thead><tr><th>Issue</th><th>File</th><th>Fix</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>Product card links 404 (bathroom-tiles.html)</td>
+          <td><span class="fix-tag ft-chat">chat.py</span></td>
+          <td>URL builder now prepends full website_url to relative paths → <code>localhost:3000/test_website/bathroom-tiles.html</code></td>
+        </tr>
+        <tr>
+          <td>Special characters in titles (â, ã, €)</td>
+          <td><span class="fix-tag ft-chat">chat.py</span></td>
+          <td>Title cleaner walks char by char, strips all non-ASCII encoding garbage before sending to widget</td>
+        </tr>
+        <tr>
+          <td>Product images missing (blank cards)</td>
+          <td><span class="fix-tag ft-chat">chat.py</span></td>
+          <td>Keyword matcher on title picks relevant Unsplash stock image — works for any business type</td>
+        </tr>
+        <tr>
+          <td>Suggestion chips not refreshing on reload</td>
+          <td><span class="fix-tag ft-widget">chatbot.js</span></td>
+          <td>History restore now strips old chip HTML, appends fresh rotated set at end of last message</td>
+        </tr>
+        <tr>
+          <td>Clicking product card navigates away from chat</td>
+          <td><span class="fix-tag ft-widget">chatbot.js</span></td>
+          <td>Changed <code>target="_self"</code> → <code>target="_blank"</code> — cards open in new tab</td>
+        </tr>
+        <tr>
+          <td>ModuleNotFoundError: No module named 'ai'</td>
+          <td><span class="fix-tag ft-chat">agents.py</span> <span class="fix-tag ft-widget">orchestrator.py</span></td>
+          <td>Added <code>sys.path.insert(0, os.path.abspath(...))</code> at top of both files — works on Windows with python -m</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Setup -->
+  <div class="sec">
+    <div class="sec-label">07 &nbsp; Setup</div>
+    <h2>How to Run</h2>
+    <div class="steps">
+      <div class="step">
+        <div class="step-n">01</div>
+        <div class="step-b">
+          <div class="step-t">Create .env file</div>
+          <div class="step-d">Copy <code>.env.example</code> → rename to <code>.env</code>. Fill in your Groq API key.</div>
+          <pre>GROQ_API_KEY=your_key_here
+GROQ_MODEL_PRIMARY=llama-3.1-8b-instant
+GROQ_MODEL_FALLBACK1=llama-3.3-70b-versatile
+GROQ_MODEL_FALLBACK2=llama-4-scout-17b-e3-instruct</pre>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">02</div>
+        <div class="step-b">
+          <div class="step-t">Install dependencies</div>
+          <pre>pip install -r requirements.txt</pre>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">03</div>
+        <div class="step-b">
+          <div class="step-t">Terminal 1 — Serve files</div>
+          <div class="step-d">Run from <b>project root</b> (not inside test_website/) so test_page.html is reachable.</div>
+          <pre>python -m http.server 3000</pre>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">04</div>
+        <div class="step-b">
+          <div class="step-t">Terminal 2 — Start API server</div>
+          <pre>python -m api.main</pre>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">05</div>
+        <div class="step-b">
+          <div class="step-t">Register client</div>
+          <pre>python test_api.py</pre>
+          <div class="step-d">Copy the <code>CLIENT_ID</code> and <code>API_KEY</code> from output.</div>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">06</div>
+        <div class="step-b">
+          <div class="step-t">Paste embed script in your HTML</div>
+          <pre>&lt;script src="http://localhost:8000/widget/chatbot.js"
+  data-client-id="YOUR_CLIENT_ID"
+  data-api-key="YOUR_API_KEY" defer&gt;&lt;/script&gt;</pre>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">07</div>
+        <div class="step-b">
+          <div class="step-t">Open test page</div>
+          <pre>http://localhost:3000/test_page.html</pre>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-n">08</div>
+        <div class="step-b">
+          <div class="step-t">If bot doesn't know products — reindex</div>
+          <pre>python check_rag.py --reindex</pre>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- API -->
+  <div class="sec">
+    <div class="sec-label">08 &nbsp; API</div>
+    <h2>All Endpoints</h2>
+    <table class="api">
+      <thead><tr><th>Method</th><th>Endpoint</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td><span class="method m-post">POST</span></td><td class="ep">/api/clients</td><td>Register new client → CLIENT_ID, API_KEY, embed script</td></tr>
+        <tr><td><span class="method m-get">GET</span></td><td class="ep">/api/clients/{id}</td><td>Client info + embed script</td></tr>
+        <tr><td><span class="method m-post">POST</span></td><td class="ep">/api/clients/{id}/sync</td><td>Manually trigger smart re-crawl</td></tr>
+        <tr><td><span class="method m-get">GET</span></td><td class="ep">/api/chat/config/{client_id}</td><td>Widget config — bot name, color, greeting</td></tr>
+        <tr><td><span class="method m-post">POST</span></td><td class="ep">/api/chat/{client_id}</td><td>Send message → response + agent_used + model_used + product cards</td></tr>
+        <tr><td><span class="method m-get">GET</span></td><td class="ep">/api/chat/history/{session_id}<span class="new">NEW</span></td><td>Full persistent chat history from SQLite</td></tr>
+        <tr><td><span class="method m-get">GET</span></td><td class="ep">/api/memory/{client_id}/{user_id}<span class="new">NEW</span></td><td>View stored user preferences</td></tr>
+        <tr><td><span class="method m-del">DELETE</span></td><td class="ep">/api/memory/{client_id}/{user_id}<span class="new">NEW</span></td><td>Clear all memory for a user</td></tr>
+        <tr><td><span class="method m-post">POST</span></td><td class="ep">/api/webhook/{id}/shopify</td><td>Shopify product webhooks</td></tr>
+        <tr><td><span class="method m-post">POST</span></td><td class="ep">/api/webhook/{id}/woocommerce</td><td>WooCommerce webhooks</td></tr>
+        <tr><td><span class="method m-post">POST</span></td><td class="ep">/api/webhook/{id}/custom</td><td>Generic webhook</td></tr>
+        <tr><td><span class="method m-get">GET</span></td><td class="ep">/health</td><td>Health check</td></tr>
+        <tr><td><span class="method m-get">GET</span></td><td class="ep">/status<span class="new">NEW</span></td><td>Live model chain status — active model, daily usage per model</td></tr>
+        <tr><td><span class="method m-get">GET</span></td><td class="ep">/docs</td><td>Swagger UI — test all endpoints in browser</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Troubleshooting -->
+  <div class="sec">
+    <div class="sec-label">09 &nbsp; Troubleshooting</div>
+    <h2>Common Issues</h2>
+    <div class="trouble">
+      <div class="titem">
+        <div class="t-q">ModuleNotFoundError: No module named 'ai'</div>
+        <div class="t-a">Create <code>ai\__init__.py</code> as an empty file in the project root. The <code>ai\</code> folder must have it to be recognized as a Python package.</div>
+      </div>
+      <div class="titem">
+        <div class="t-q">Bot says "Something went wrong"</div>
+        <div class="t-a">Check API server terminal for error logs. Most common: wrong CLIENT_ID or API_KEY in test_page.html, API server not running, or Groq API key expired. Re-run <code>python test_api.py</code> to get fresh credentials.</div>
+      </div>
+      <div class="titem">
+        <div class="t-q">Product card links show 404</div>
+        <div class="t-a">Start HTTP server from project root, not from inside test_website/. The URL builder prepends the client's website_url to relative paths automatically.</div>
+      </div>
+      <div class="titem">
+        <div class="t-q">Bot doesn't know about products</div>
+        <div class="t-a">RAG index is empty or stale. Run: <code>python check_rag.py --reindex</code></div>
+      </div>
+      <div class="titem">
+        <div class="t-q">Model chain not switching / empty responses</div>
+        <div class="t-a">Check <code>localhost:8000/status</code>. If all 3 Groq models exhausted and Ollama not running, responses will be empty. Wait for midnight UTC reset or start Ollama with <code>ollama serve</code>.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <span>ChatBot SaaS — CrewAI Edition v2.0</span>
+    <span>4 agents &nbsp;·&nbsp; 3-model chain &nbsp;·&nbsp; dual memory &nbsp;·&nbsp; multi-tenant &nbsp;·&nbsp; generic</span>
+  </div>
+
+</div>
+</body>
+</html>
